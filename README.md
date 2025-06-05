@@ -1,131 +1,73 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# WoofAway
 
-Welcome USER_NAME,
+## Milestone Project 4 - Full Stack Frameworks with Django
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+- WoofAway is a full-stack Django web application designed to connect dog owners with verified, dog-friendly accommodation providers. The platform allows users to search, book, and review stays that cater specifically to their pets’ needs. At the same time, hosts can register and list their own dog-welcoming properties, manage bookings, and engage with guest feedback.
 
-You can safely delete this README.md file or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **June 18, 2024**
+- The website offers a secure authentication system, a relational database with CRUD functionality for listings and bookings, and e-commerce integration via Stripe to process payments. With a clear user-focused interface, WoofAway aims to deliver a seamless, pet-conscious travel experience while demonstrating strong full-stack development practices in line with professional web application standards.
 
-## Gitpod Reminders
+- This is my Milestoine Project 4 submission for Code Institutes Diploma in Web Application Development Course.
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+## Project Link
 
-`python3 -m http.server`
+To access my website please click this [link]()
 
-A blue button should appear to click: _Make Public_,
+## Repository
 
-Another blue button should appear to click: _Open Browser_.
+To access my repository please click this [link](https://github.com/FraserR1188/WoofAway)
 
-To run a backend Python file, type `python3 app.py` if your Python file is named `app.py`, of course.
+## Project Goals
 
-A blue button should appear to click: _Make Public_,
+The primary goal of WoofAway is to create a user-friendly, full-stack Django web application that meets the practical needs of dog owners seeking pet-friendly accommodation, while also providing a streamlined way for hosts to list and manage their properties.
 
-Another blue button should appear to click: _Open Browser_.
+# Table of Contents
 
-By Default, Gitpod gives you superuser security privileges. Therefore, you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+## Contents
 
-To log into the Heroku toolbelt CLI:
+- [User Stories]
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+## User Stories
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you, so do not share it. If you accidentally make it public, you can create a new one with _Regenerate API Key_.
+### Guest / Logged-in user (Customer looking to book)
 
-### Connecting your Mongo database
+- As a guest / logged-in user, I want to be able to register and log in so I can book listings and leave reviews.
+- As a guest / logged-in user, I want to be able to search and filter listings so I can find suitable places for me and my dog.
+- As a guest / logged-in user, I want to be able to view detailed listing pages so I can see pet-friendly features, photos and price.
+- As a guest / logged-in user, I want to be able to make a secure booking so I can reserve a place for my trip.
+- As a guest / logged-in user, I want to be able to pay for my trip easily.
+- As a guest / logged-in user, I want to be able to recieve a booking confirmation so I know my booking is successful.
+- As a guest / logged-in user, I want to be able to cancel a booking in case I change my mind.
+- As a guest / logged-in user, I want to be able to leave a review so I can share my experiences with others.
+- As a guest / logged-in user, I want to be able to view my bookings dashboard so I can keep track of my trips.
+- As a guest / logged-in user, I want to be able to edit my account info in case they change for any reason.
 
-- **Connect to Mongo CLI on a IDE**
-- navigate to your MongoDB Clusters Sandbox
-- click **"Connect"** button
-- select **"Connect with the MongoDB shell"**
-- select **"I have the mongo shell installed"**
-- choose **mongosh (2.0 or later)** for : **"Select your mongo shell version"**
-- choose option: **"Run your connection string in your command line"**
-- in the terminal, paste the copied code `mongo "mongodb+srv://<CLUSTER-NAME>.mongodb.net/<DBname>" --apiVersion 1 --username <USERNAME>`
-  - replace all `<angle-bracket>` keys with your own data
-- enter password _(will not echo **\*\*\*\*** on screen)_
+### Host (Dog-friendly property owner)
 
-------
+- As a host, I want to register for a host account so I can list my dog-friendly accomomdation.
+- As a host, I want to create a new listing so I can offer my home for bookings
+- As a host, I want to edit or delete my listing so I can keep my information up-to-date
+- As a host, I want to view bookings for my listing so I can manage who is staying at my place
+- As a host, I want to prevent overlapping bookings so my property isn’t double-booked
+- As a host, I want to respond to guest reviews so I can engage with guest feedback
 
-## Release History
+### Webiste Owner (Admin of the platform)
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+- As a website owner, I want to access the Django admin panel so I can manage users, listings, and reviews
+- As a website owner, I want to remove inappropriate listings or reviews so I can maintain platform safety and quality
+- As a website owner, I want to view site-wide statistics or data so I can monitor usage or improve performance
 
-**June 18, 2024,** Add Mongo back into template
+## Design
 
-**June 14, 2024,** Temporarily remove Mongo until the key issue is resolved
+### Overview
 
-**May 28 2024:** Fix Mongo and Links installs
+I want the design of the website to super easy to read and navigate. Simplistic design with smooth edges is what I have in mind. The name "WoofAway" implies what the website wants to achieve. It's clean, friendsly and repsonsive design inspired by Airbnb which is tailored for dog owners and hosts. The fonts which are select show a qurky yet understandable and legible.
 
-**April 26 2024:** Update node version to 16
+### Colour
 
-**September 20 2023:** Update Python version to 3.9.17.
+### Typography
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+The fonts which I have picked are the playful Caveat for headings, logos and testimonials and the modern Quicksand font for body text, nav and buttons. Caveat adds a more personal feel and friendly feel and Quicksand is clear and easliy read.
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+### Imagery
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
-
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
-
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
-
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
-
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
-
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
-
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
-
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
-
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
-
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
-
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
-
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
-
-------
-
-## FAQ about the uptime script
-
-**Why have you added this script?**
-
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
-
-**How will this affect me?**
-
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
-
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
-
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
-
-**So….?**
-
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
-
-**Can I opt out?**
-
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
-
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
-
-**Anything more?**
-
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
-
----
-
-Happy coding!
+The images which will be present on the website will be the logo for WoofAway and the pictures of the houses on the listings. The host will be able to upload them. A profile picture of the host can aslo be uploaded but not necessary.
