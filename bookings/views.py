@@ -13,6 +13,7 @@ from django.contrib import messages
 from .models import Booking, Payment
 from listings.models import Listing
 from accounts.models import UserProfile  # if you want to check host status
+from .forms import BookingForm  # import our custom form
 
 
 class BookingListView(LoginRequiredMixin, ListView):
@@ -49,25 +50,20 @@ class BookingDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 
 
 class BookingCreateView(LoginRequiredMixin, CreateView):
-    """
-    Create a new booking for a particular listing ID. We set guest = request.user
-    and listing = the listing we fetched, then let the model’s save() auto-calc price.
-    """
     model = Booking
+    form_class = BookingForm            # use our custom form instead of fields=[]
     template_name = "bookings/booking_form.html"
-    fields = ["check_in", "check_out"]
-    # We rely on get_absolute_url() on Booking to redirect after success
+    # get_absolute_url from Booking model will redirect to booking_detail
 
     def dispatch(self, request, *args, **kwargs):
-        # Retrieve the listing first, or 404 if it does not exist
+        # Ensure the listing exists
         self.listing = get_object_or_404(Listing, pk=kwargs["listing_id"])
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        # Before saving, set the guest and listing
+        # Set the guest and listing before saving
         form.instance.guest = self.request.user
         form.instance.listing = self.listing
-        # The model’s save() will auto-calc total_price
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -77,25 +73,24 @@ class BookingCreateView(LoginRequiredMixin, CreateView):
 
 
 class BookingUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    """
-    Update an existing booking’s check_in/check_out. Only allowed if the booking is
-    still 'pending' and the current user is the guest.
-    """
     model = Booking
+    form_class = BookingForm
     template_name = "bookings/booking_form.html"
-    fields = ["check_in", "check_out"]
+
+    def get_initial(self):
+        initial = super().get_initial()
+        booking = self.get_object()
+        # Format existing dates as "YYYY-MM-DD to YYYY-MM-DD"
+        initial["date_range"] = f"{booking.check_in} to {booking.check_out}"
+        return initial
 
     def test_func(self):
         booking = self.get_object()
-        return (booking.guest == self.request.user) and (booking.status == "pending")
+        return booking.guest == self.request.user and booking.status == "pending"
 
     def handle_no_permission(self):
         messages.error(self.request, "You cannot edit this booking.")
         return redirect("bookings:booking_list")
-
-    def form_valid(self, form):
-        # After changing dates, total_price will be recalculated by model.save()
-        return super().form_valid(form)
 
 
 class BookingCancelView(LoginRequiredMixin, UserPassesTestMixin, View):
