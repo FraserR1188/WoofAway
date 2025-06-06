@@ -6,5 +6,4 @@ app_name = 'home'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path("my/", views.MyReviewsView.as_view(), name="my_reviews"),
 ]

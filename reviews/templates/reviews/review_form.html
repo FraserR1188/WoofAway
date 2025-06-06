@@ -1,5 +1,6 @@
 {# reviews/templates/reviews/review_form.html #}
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
   <div class="container py-4" style="margin-top:80px;">
@@ -9,6 +10,7 @@
       <h1>Leave a Review for “{{ view.listing.title }}”</h1>
     {% endif %}
     <hr>
+
     <form method="post" class="row g-3">
       {% csrf_token %}
       {{ form.non_field_errors }}
@@ -28,7 +30,25 @@
         <button type="submit" class="btn btn-primary">
           {% if object %}Save Changes{% else %}Submit Review{% endif %}
         </button>
-        <a href="{% url 'listings:listing_detail' view.listing.pk %}" class="btn btn-secondary">Cancel</a>
+
+        {# Cancel button #}
+        {% if object %}
+          {# Editing an existing review: go back to that review’s listing detail #}
+          <a 
+            href="{% url 'listings:listing_detail' object.listing.pk %}" 
+            class="btn btn-secondary"
+          >
+            Cancel
+          </a>
+        {% else %}
+          {# Creating a new review: go back to the listing we fetched in the CreateView #}
+          <a 
+            href="{% url 'listings:listing_detail' view.listing.pk %}" 
+            class="btn btn-secondary"
+          >
+            Cancel
+          </a>
+        {% endif %}
       </div>
     </form>
   </div>

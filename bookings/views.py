@@ -9,6 +9,7 @@ from django.views.generic import (
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.contrib import messages
+from reviews.models import Review 
 
 from .models import Booking, Payment
 from listings.models import Listing
@@ -17,9 +18,6 @@ from .forms import BookingForm  # import our custom form
 
 
 class BookingListView(LoginRequiredMixin, ListView):
-    """
-    Show all bookings where the current user is the guest.
-    """
     model = Booking
     template_name = "bookings/booking_list.html"
     context_object_name = "bookings"
@@ -27,6 +25,18 @@ class BookingListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Booking.objects.filter(guest=self.request.user).order_by("-created_at")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Compute all the listing IDs that this user has already reviewed:
+        reviewed_ids = (
+            Review.objects
+            .filter(guest=self.request.user)
+            .values_list("listing_id", flat=True)
+        )
+        # Pass that QuerySet (or list) to the template:
+        context["reviewed_ids"] = set(reviewed_ids)
+        return context
 
 
 class BookingDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):

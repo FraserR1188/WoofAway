@@ -11,6 +11,50 @@
   <br>
   <a href="{% url 'listings:listing_list' %}">Back to all listings</a>
 
+  {# ==== Reviews Section ==== #}
+  <div class="mt-5">
+    <h3>Reviews</h3>
+    {% if listing.reviews.exists %}
+      <ul class="list-group mb-4">
+        {% for review in listing.reviews.all %}
+          <li class="list-group-item">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <strong>{{ review.guest.username }}</strong>
+                <small class="text-muted">– {{ review.created_at|date:"M d, Y" }}</small>
+                <div class="mb-2">
+                  {# ===== REVISED STAR‐DISPLAY USING slice ===== #}
+                  {# Show '★' for each filled star, then '☆' for the remainder, up to 5 total. #}
+
+                  <div class="mb-2">
+                    {# First, take the first review.rating characters of "12345": these become filled stars #}
+                    {% for _ in "12345"|slice:":{{ review.rating }}" %}
+                      <span class="text-warning">&#9733;</span>
+                    {% endfor %}
+
+                    {# Next, take characters from index review.rating to the end: these become empty stars #}
+                    {% for _ in "12345"|slice:"{{ review.rating }}:" %}
+                      <span class="text-muted">&#9734;</span>
+                    {% endfor %}
+                  </div>
+                </div>
+                <p>{{ review.comment }}</p>
+              </div>
+              {# If it’s the current user’s review, show edit link: #}
+              {% if user == review.guest %}
+                <div>
+                  <a href="{% url 'reviews:review_edit' review.pk %}" class="btn btn-sm btn-outline-secondary me-1">Edit</a>
+                  <a href="{% url 'reviews:review_delete' review.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                </div>
+              {% endif %}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-muted">No reviews yet. Be the first to leave one!</p>
+    {% endif %}
+
   {% if user.is_authenticated %}
   {% if user != listing.host %}
     <a 

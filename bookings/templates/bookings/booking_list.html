@@ -56,14 +56,12 @@
               {# ==== NEW: REVIEW COLUMN ==== #}
               <td>
                 {% if booking.status == "confirmed" %}
-                  {# Check if user has already left a review for this listing: #}
-                  {% if booking.listing.reviews.filter(guest=request.user).exists %}
+                  {# Check if this listing’s PK is in the reviewed_ids set from the view #}
+                  {% if booking.listing.pk in reviewed_ids %}
                     <span class="text-muted">Reviewed</span>
                   {% else %}
-                    <a 
-                      href="{% url 'reviews:review_create' booking.listing.pk %}" 
-                      class="btn btn-sm btn-outline-primary"
-                    >
+                    <a href="{% url 'reviews:review_create' booking.listing.pk %}"
+                      class="btn btn-sm btn-outline-primary">
                       Leave Review
                     </a>
                   {% endif %}
@@ -71,6 +69,7 @@
                   <span class="text-muted">N/A</span>
                 {% endif %}
               </td>
+
             </tr>
           {% endfor %}
         </tbody>
