@@ -1,0 +1,41 @@
+{# accounts/templates/accounts/profile_edit.html #}
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-4">
+  <h1>Edit Your Profile</h1>
+  <hr>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <div class="mb-3">
+      <label for="{{ form.is_host.id_for_label }}" class="form-label">Are you a host?</label>
+      {{ form.is_host }} 
+      {{ form.is_host.errors }}
+    </div>
+
+    <div class="mb-3">
+      <label for="{{ form.bio.id_for_label }}" class="form-label">Bio</label>
+      {{ form.bio|as_crispy_field }}
+      {{ form.bio.errors }}
+    </div>
+
+    <div class="mb-3">
+      <label for="{{ form.accessibility_needs.id_for_label }}" class="form-label">Accessibility Needs</label>
+      {{ form.accessibility_needs|as_crispy_field }}
+      {{ form.accessibility_needs.errors }}
+    </div>
+
+    <div class="mb-3">
+      <label for="{{ form.profile_image.id_for_label }}" class="form-label">Profile Image</label>
+      {{ form.profile_image }}
+      {{ form.profile_image.errors }}
+    </div>
+
+    <button type="submit" class="btn btn-success">Save Changes</button>
+    <a href="{% url 'accounts:view_profile' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

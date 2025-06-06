@@ -1,0 +1,42 @@
+{# accounts/templates/accounts/profile.html #}
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-4">
+  <h1>{{ request.user.username }}’s Profile</h1>
+  <hr>
+
+  <div class="row">
+    <div class="col-md-3 text-center">
+      {% if profile.profile_image %}
+        <img src="{}" class="img-fluid rounded-circle" alt="Profile Image">
+      {% else %}
+        <img src="{}" class="img-fluid rounded-circle" alt="Default Profile Image">
+      {% endif %}
+    </div>
+    <div class="col-md-9">
+      <dl class="row">
+        <dt class="col-sm-3">Email:</dt>
+        <dd class="col-sm-9">{{ request.user.email }}</dd>
+
+        <dt class="col-sm-3">Host?</dt>
+        <dd class="col-sm-9">
+          {% if profile.is_host %}
+            <span class="badge bg-success">Yes</span>
+          {% else %}
+            <span class="badge bg-secondary">No</span>
+          {% endif %}
+        </dd>
+
+        <dt class="col-sm-3">Bio:</dt>
+        <dd class="col-sm-9">{{ profile.bio|linebreaksbr }}</dd>
+
+        <dt class="col-sm-3">Accessibility Needs:</dt>
+        <dd class="col-sm-9">{{ profile.accessibility_needs|linebreaksbr }}</dd>
+      </dl>
+
+      <a href="{% url 'accounts:edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
