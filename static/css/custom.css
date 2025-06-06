@@ -1,0 +1,39 @@
+/* custom.css */
+
+/* Increase spacing around flash messages */
+.message-container {
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  z-index: 1050;
+}
+
+/* Message alerts – fade out after 5 seconds */
+.alert {
+  animation: fadeOut 1s 5s forwards;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+/* Style the inbox list items */
+.list-group-item a {
+  text-decoration: none;
+  color: #000;
+}
+.list-group-item a:hover {
+  text-decoration: underline;
+}
+
+/* Booking form header spacing */
+.booking-header {
+  margin-bottom: 30px;
+}
+
+/* Flatpickr overrides (optional) */
+.flatpickr-calendar {
+  font-size: 0.9rem;
+}
