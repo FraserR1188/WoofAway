@@ -1,0 +1,81 @@
+{# bookings/templates/bookings/host_booking_list.html #}
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-4">
+  <h1 class="mb-4">Bookings for Your Listings</h1>
+
+  {% if bookings %}
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Listing</th>
+          <th scope="col">Guest</th>
+          <th scope="col">Check-In</th>
+          <th scope="col">Check-Out</th>
+          <th scope="col">Status</th>
+          <th scope="col">Total Price</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for booking in bookings %}
+          <tr>
+            <td>{{ booking.pk }}</td>
+            <td>
+              <a href="{% url 'listings:listing_detail' booking.listing.pk %}">
+                {{ booking.listing.title }}
+              </a>
+            </td>
+            <td>
+              <a href="{% url 'accounts:view_profile' %}?user={{ booking.guest.pk }}">
+                {{ booking.guest.username }}
+              </a>
+            </td>
+            <td>{{ booking.check_in }}</td>
+            <td>{{ booking.check_out }}</td>
+            <td>
+              {% if booking.status == "pending" %}
+                <span class="badge bg-warning text-dark">Pending</span>
+              {% elif booking.status == "confirmed" %}
+                <span class="badge bg-success">Confirmed</span>
+              {% elif booking.status == "cancelled" %}
+                <span class="badge bg-danger">Cancelled</span>
+              {% endif %}
+            </td>
+            <td>${{ booking.total_price }}</td>
+            <td>
+              <a 
+                href="{% url 'bookings:booking_detail' booking.pk %}" 
+                class="btn btn-sm btn-primary"
+              >
+                View
+              </a>
+              {% if booking.status == "pending" %}
+                {# If you have a Confirm view, you could link to it here. #}
+                <form 
+                  action="{% url 'bookings:booking_confirm' booking.pk %}" 
+                  method="post" 
+                  class="d-inline"
+                  onsubmit="return confirm('Mark this booking as confirmed?');"
+                >
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-success">
+                    Confirm
+                  </button>
+                </form>
+                <form 
+                  action="{% url 'bookings:booking_cancel' booking.pk %}" 
+                  method="post" 
+                  class="d-inline"
+                  onsubmit="return confirm('Cancel this booking?');"
+                >
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-danger">
+                    Cancel
+                  </button>
+                </form>
+              {% endif %}
+            </td>
+          </tr>

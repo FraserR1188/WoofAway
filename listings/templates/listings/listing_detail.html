@@ -10,4 +10,26 @@
   <a href="{% url 'listings:listing_edit' listing.pk %}">Edit this listing</a>
   <br>
   <a href="{% url 'listings:listing_list' %}">Back to all listings</a>
+
+  {% if user.is_authenticated %}
+  {% if user != listing.host %}
+    <a 
+      href="{% url 'bookings:booking_create' listing.pk %}" 
+      class="btn btn-primary mb-3"
+    >
+      Book Now
+    </a>
+  {% else %}
+    <p class="text-muted">You’re the host of this listing.</p>
+  {% endif %}
+{% else %}
+  <a 
+    href="{% url 'account_login' %}?next={% url 'bookings:booking_create' listing.pk %}" 
+    class="btn btn-primary mb-3"
+  >
+    Login to Book
+  </a>
+{% endif %}
+
+
 {% endblock %}

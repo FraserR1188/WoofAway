@@ -17,9 +17,20 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),
+    path("admin/", admin.site.urls),
+
+    # Home app
+    path("", include("home.urls")),
+
+    # Allauth (login, signup, logout, etc.)
+    path("accounts/", include("allauth.urls")),
+
+    # Accounts (profile, edit)
     path("accounts/", include(("accounts.urls", "accounts"), namespace="accounts")),
-    path('', include('home.urls')),
+
+    # Listings app
     path("listings/", include(("listings.urls", "listings"), namespace="listings")),
+
+    # Bookings app
+    path("bookings/", include(("bookings.urls", "bookings"), namespace="bookings")),
 ]

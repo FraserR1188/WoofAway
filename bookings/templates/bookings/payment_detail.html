@@ -1,0 +1,35 @@
+{# bookings/templates/bookings/payment_detail.html #}
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-4">
+  <h1>Payment for Booking #{{ payment.booking.pk }}</h1>
+  <hr>
+
+  <dl class="row mb-4">
+    <dt class="col-sm-3">Booking:</dt>
+    <dd class="col-sm-9">
+      <a href="{% url 'bookings:booking_detail' payment.booking.pk %}">View Booking</a>
+    </dd>
+
+    <dt class="col-sm-3">Status:</dt>
+    <dd class="col-sm-9">
+      {% if payment.status == "pending" %}
+        <span class="badge bg-warning text-dark">Pending</span>
+      {% elif payment.status == "succeeded" %}
+        <span class="badge bg-success">Succeeded</span>
+      {% else %}
+        <span class="badge bg-danger">Failed</span>
+      {% endif %}
+    </dd>
+
+    <dt class="col-sm-3">Stripe Intent:</dt>
+    <dd class="col-sm-9">{{ payment.stripe_payment_intent }}</dd>
+
+    <dt class="col-sm-3">Timestamp:</dt>
+    <dd class="col-sm-9">{{ payment.timestamp|date:"M d, Y H:i" }}</dd>
+  </dl>
+
+  <a href="{% url 'bookings:booking_detail' payment.booking.pk %}" class="btn btn-secondary">Back to Booking</a>
+</div>
+{% endblock %}
