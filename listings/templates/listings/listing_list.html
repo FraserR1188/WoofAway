@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>All Listings (placeholder)</h1>
+  <ul>
+    {% for listing in listings %}
+      <li>
+        <a href="{% url 'listings:listing_detail' listing.pk %}">
+          {{ listing.title }}
+        </a>
+      </li>
+    {% empty %}
+      <li>No listings yet.</li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'listings:listing_create' %}">Create a new listing</a>
+{% endblock %}

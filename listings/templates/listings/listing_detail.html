@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ listing.title }}</h1>
+  <p>Category: {{ listing.category }}</p>
+  <p>Location: {{ listing.location }}</p>
+  <p>Price per night: ${{ listing.price_per_night }}</p>
+  <p>{{ listing.description }}</p>
+
+  <a href="{% url 'listings:listing_edit' listing.pk %}">Edit this listing</a>
+  <br>
+  <a href="{% url 'listings:listing_list' %}">Back to all listings</a>
+{% endblock %}

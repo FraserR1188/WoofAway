@@ -37,75 +37,75 @@
   </head>
   <body>
     <header class="container-fluid fixed-top">
-          <!-- =========================
-       NAVBAR
-  =========================== -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="{% url 'home:index' %}">WoofAway</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div
-        class="collapse navbar-collapse"
-        id="navbarSupportedContent"
-      >
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'home:index' %}">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'listings:listing_list' %}">Listings</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'about' %}">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'contact' %}">Contact</a>
-          </li>
-
-          {% if user.is_authenticated %}
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="userDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
+        <!-- =========================
+            NAVBAR
+        =========================== -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+            <a class="navbar-brand" href="{% url 'home:index' %}">WoofAway</a>
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
                 aria-expanded="false"
-              >
-                {{ user.username }}
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">Profile</a></li>
-                <li><a class="dropdown-item" href="{% url 'bookings:booking_list' %}">My Bookings</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div
+                class="collapse navbar-collapse"
+                id="navbarSupportedContent"
+            >
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'home:index' %}">Home</a>
                 </li>
-              </ul>
-            </li>
-          {% else %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'account_login' %}">Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'account_signup' %}">Sign Up</a>
-            </li>
-          {% endif %}
-        </ul>
-      </div>
-    </div>
-  </nav>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'listings:listing_list' %}">Listings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Contact</a>
+                </li>
+
+                {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                    <a
+                        class="nav-link dropdown-toggle"
+                        href="#"
+                        id="userDropdown"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                    >
+                        {{ user.username }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="">Profile</a></li>
+                        <li><a class="dropdown-item" href="">My Bookings</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li>
+                        <a class="dropdown-item" href="">Logout</a>
+                        </li>
+                    </ul>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                    <a class="nav-link" href="">Login</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="">Sign Up</a>
+                    </li>
+                {% endif %}
+                </ul>
+            </div>
+            </div>
+        </nav>
     </header>
 
     {% if messages %}
