@@ -1,0 +1,81 @@
+{# reviews/templates/reviews/my_reviews.html #}
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container py-4" style="margin-top:80px;">
+    <h1>My Reviews</h1>
+    <hr>
+
+    {% if reviews %}
+      <ul class="list-group">
+        {% for review in reviews %}
+          <li class="list-group-item">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <h5>
+                  <a href="{% url 'listings:listing_detail' review.listing.pk %}">
+                    {{ review.listing.title }}
+                  </a>
+                </h5>
+                <p>
+                  {% for i in "12345"|make_list %}
+                    {% if i|int <= review.rating %}
+                      <span class="text-warning">&#9733;</span>
+                    {% else %}
+                      <span class="text-muted">&#9734;</span>
+                    {% endif %}
+                  {% endfor %}
+                </p>
+                <p class="mb-1">{{ review.comment }}</p>
+                <small class="text-muted">{{ review.created_at|date:"M d, Y" }}</small>
+              </div>
+              <div>
+                <a href="{% url 'reviews:review_edit' review.pk %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                <a href="{% url 'reviews:review_delete' review.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+
+      {% if is_paginated %}
+        <nav aria-label="Page navigation">
+          <ul class="pagination mt-3">
+            {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+              </li>
+            {% else %}
+              <li class="page-item disabled">
+                <span class="page-link">Previous</span>
+              </li>
+            {% endif %}
+            {% for num in paginator.page_range %}
+              {% if num == page_obj.number %}
+                <li class="page-item active">
+                  <span class="page-link">{{ num }}</span>
+                </li>
+              {% else %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+              </li>
+            {% else %}
+              <li class="page-item disabled">
+                <span class="page-link">Next</span>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+      {% endif %}
+
+    {% else %}
+      <p class="text-muted">You haven't left any reviews yet.</p>
+    {% endif %}
+  </div>
+{% endblock %}
