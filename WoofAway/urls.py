@@ -33,4 +33,7 @@ urlpatterns = [
 
     # Bookings app
     path("bookings/", include(("bookings.urls", "bookings"), namespace="bookings")),
+
+    # Reviews app
+    path("reviews/", include(("reviews.urls", "reviews"), namespace="reviews")),
 ]

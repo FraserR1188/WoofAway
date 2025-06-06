@@ -1,0 +1,15 @@
+{# reviews/templates/reviews/review_confirm_delete.html #}
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container py-4" style="margin-top:80px;">
+    <h1>Delete Your Review</h1>
+    <hr>
+    <p>Are you sure you want to delete your review of “{{ object.listing.title }}”?</p>
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Yes, Delete</button>
+      <a href="{% url 'listings:listing_detail' object.listing.pk %}" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+{% endblock %}
