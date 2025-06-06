@@ -3,5 +3,117 @@
 {% load static %}
 
 {% block content %}
-    <h1 class="display-4 text-success">It works!</h1>
+  <!-- =========================
+       HERO / JUMBOTRON SECTION
+  =========================== -->
+  <section class="hero-section text-center text-white py-5">
+    <div class="container hero-content">
+      <h1 class="display-4 fw-bold">Find the Perfect Home for Your Pup</h1>
+      <p class="lead mb-4">
+        Discover pet-friendly stays, trusted hosts, and worry-free
+        dogboarding experiences.
+      </p>
+      <a
+        href="{% url 'listings:listing_list' %}"
+        class="btn btn-secondary btn-lg px-4 me-2"
+      >
+        Browse Listings
+      </a>
+      {% if user.is_authenticated and user.profile.is_host %}
+        <a
+          href="{% url 'listings:listing_create' %}"
+          class="btn btn-success btn-lg px-4"
+        >
+          Create a Listing
+        </a>
+      {% else %}
+        <a
+          href="{% url 'account_signup' %}?next=/"
+          class="btn btn-success btn-lg px-4"
+        >
+          Become a Host
+        </a>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- =========================
+       FEATURES / HIGHLIGHTS
+  =========================== -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row mb-4 text-center">
+        <div class="col-md-8 mx-auto">
+          <h2 class="fw-bold">Why Choose WoofAway?</h2>
+          <p class="text-muted">
+            We make petboarding simple, secure, and personal. Get to know
+            our top features:
+          </p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center">
+              <i class="bi bi-search feature-icon mb-3"></i>
+              <h5 class="card-title">Easy Search</h5>
+              <p class="card-text text-muted">
+                Browse thousands of verified pet-friendly listings near you
+                in seconds.
+              </p>
+              <a href="{% url 'listings:listing_list' %}" class="stretched-link text-primary">See Listings</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center">
+              <i class="bi bi-people feature-icon mb-3"></i>
+              <h5 class="card-title">Trusted Hosts</h5>
+              <p class="card-text text-muted">
+                All our hosts are vetted, pet lovers with stellar reviews from
+                fellow dog owners.
+              </p>
+              <a href="{% url 'reviews:review_list' %}" class="stretched-link text-primary">Read Reviews</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center">
+              <i class="bi bi-calendar-check feature-icon mb-3"></i>
+              <h5 class="card-title">Book with Confidence</h5>
+              <p class="card-text text-muted">
+                Secure payment processing, instant confirmations, and easy
+                cancellations if plans change.
+              </p>
+              <a href="{% url 'bookings:booking_list' %}" class="stretched-link text-primary">View Your Bookings</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================
+       CALL-TO-ACTION BANNER
+  =========================== -->
+  <section class="py-5 bg-secondary text-white text-center">
+    <div class="container">
+      <h3 class="fw-bold mb-3">Ready to get started?</h3>
+      <p class="mb-4">
+        Whether you’re a host looking to welcome furry guests or a dog
+        owner seeking the perfect pet sitter—we’ve got you covered.
+      </p>
+      <a
+        href="{% url 'account_signup' %}"
+        class="btn btn-dark btn-lg px-4"
+      >
+        Join WoofAway Today
+      </a>
+    </div>
+  </section>
 {% endblock %}
