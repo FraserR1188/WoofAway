@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+import stripe
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -166,3 +167,11 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# STRIPE PAYMENT ENVIROMENT VARIABLES
+
+STRIPE_PUBLISHABLE_KEY = os.getenv("pk_test_51RXPDN2LfHWkSgoaXnLVGVlvg7ySawnHOKx7gjpwDrPafVaC9wvvwxLY9DkhTwONjeqwDuxhYBaCLmPgdRpWufkx00YCzP1doh")
+
+STRIPE_SECRET_KEY = os.getenv("sk_test_51RXPDN2LfHWkSgoa61LFFCe4IzNgAPgWZh7pi9Hga0xw36bunoQonSfFZfX0EhsmUyC60ccBaulW8aDdL7zHX2gi00YoCd6ONe")
+
+stripe.api_key = STRIPE_SECRET_KEY

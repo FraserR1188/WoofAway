@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import (
     ListView,
     DetailView,
@@ -15,6 +15,10 @@ from .models import Booking, Payment
 from listings.models import Listing
 from accounts.models import UserProfile  # if you want to check host status
 from .forms import BookingForm  # import our custom form
+
+from django.urls import reverse
+from django.conf import settings
+import stripe
 
 
 class BookingListView(LoginRequiredMixin, ListView):
@@ -144,6 +148,36 @@ class PaymentDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     def handle_no_permission(self):
         messages.error(self.request, "You do not have permission to view that payment.")
         return redirect("bookings:booking_list")
+
+
+def create_checkout_session(request, listing_id):
+    # Look up your listing/booking and calculate amount (in pence)
+    listing = get_object_or_404(Listing, pk=listing_id)
+    YOUR_DOMAIN = request.build_absolute_uri('/')[:-1]  # e.g. https://localhost:8000
+
+    session = stripe.checkout.Session.create(
+        payment_method_types=['card'],           # cards only; Apple/Google Pay added automatically
+        line_items=[{
+            'price_data': {
+                'currency': 'gbp',
+                'unit_amount': int(listing.price * 100),  # pence
+                'product_data': {
+                    'name': listing.title,
+                },
+            },
+            'quantity': 1,
+        }],
+        mode='payment',
+        success_url=YOUR_DOMAIN + reverse('payments:success') + '?session_id={CHECKOUT_SESSION_ID}',
+        cancel_url=YOUR_DOMAIN + reverse('payments:cancel'),
+    )
+    return redirect(session.url, code=303)
+
+def payment_success(request):
+    return render(request, 'payments/success.html')
+
+def payment_cancel(request):
+    return render(request, 'payments/cancel.html')
 
 
 class HostBookingListView(LoginRequiredMixin, ListView):
