@@ -1,5 +1,9 @@
 /* custom.css */
 
+body {
+  padding-top: 56px;
+}
+
 /* Increase spacing around flash messages */
 .message-container {
   position: fixed;

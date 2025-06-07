@@ -37,11 +37,11 @@
     <title>WoofAway {% block extra_title %}{% endblock %}</title>
   </head>
   <body>
-    <header class="container-fluid fixed-top">
+    <header class="container-fluid">
       <!-- =========================
            NAVBAR
       =========================== -->
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
           <a class="navbar-brand" href="{% url 'home:index' %}">WoofAway</a>
           <button
@@ -141,6 +141,28 @@
 
     {% block content %}
     {% endblock %}
+
+    
+    <!-- =========================
+        CALL-TO-ACTION BANNER
+    =========================== -->
+    <footer>
+      <section class="footer fixed-bottom bg-light">
+        <div class="container">
+          <h3 class="fw-bold mb-3">Ready to get started?</h3>
+          <p class="mb-4">
+            Whether you’re a host looking to welcome furry guests or a dog
+            owner seeking the perfect pet sitter—we’ve got you covered.
+          </p>
+          <a
+            href=""
+            class="btn btn-dark btn-lg px-4"
+          >
+            Join WoofAway Today
+          </a>
+        </div>
+      </section>
+    </footer>
     
     {% block postloadjs %}
     {% endblock %}
