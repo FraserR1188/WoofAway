@@ -79,7 +79,16 @@ class BookingCreateView(LoginRequiredMixin, CreateView):
         return kwargs
 
     def form_valid(self, form):
-        # form_valid now needs both user and listing
+        # 1) If they asked to save the address, update their profile
+        if form.cleaned_data.get("save_address"):
+            profile = self.request.user.profile
+            profile.street_address = form.cleaned_data["street_address"]
+            profile.city = form.cleaned_data["city"]
+            profile.postcode = form.cleaned_data["postcode"]
+            profile.country = form.cleaned_data["country"]
+            profile.save()
+
+        # 2) Now create the booking (your existing logic)
         booking = form.form_valid(user=self.request.user, listing=self.listing)
         return redirect(booking.get_absolute_url())
 

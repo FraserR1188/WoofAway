@@ -2,22 +2,22 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import UserProfile
 from .forms import ProfileForm
 
 @login_required
 def view_profile(request):
     """
-    Show the logged-in user’s profile. (We assume a UserProfile always exists
-    because the allauth signal created one at signup time.)
+    Show the logged-in user’s profile with all address fields.
     """
-    profile = request.user.profile  # because of related_name="profile"
-    return render(request, "accounts/profile.html", {"profile": profile})
+    profile = request.user.profile
+    return render(request, "accounts/view_profile.html", {
+        "profile": profile
+    })
 
 @login_required
 def edit_profile(request):
     """
-    Allow the user to update their own UserProfile fields.
+    Allow the user to update their own UserProfile fields, including address.
     """
     profile = request.user.profile
     if request.method == "POST":
@@ -29,4 +29,6 @@ def edit_profile(request):
     else:
         form = ProfileForm(instance=profile)
 
-    return render(request, "accounts/profile_edit.html", {"form": form})
+    return render(request, "accounts/edit_profile.html", {
+        "form": form
+    })

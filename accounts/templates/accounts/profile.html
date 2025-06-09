@@ -1,19 +1,31 @@
 {# accounts/templates/accounts/profile.html #}
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-<div class="container py-4">
+<div class="container py-4" style="margin-top: 80px;">
   <h1>{{ request.user.username }}’s Profile</h1>
   <hr>
 
   <div class="row">
+    <!-- Profile picture -->
     <div class="col-md-3 text-center">
       {% if profile.profile_image %}
-        <img src="{}" class="img-fluid rounded-circle" alt="Profile Image">
+        <img 
+          src="{{ profile.profile_image.url }}" 
+          class="img-fluid rounded-circle" 
+          alt="Profile Image"
+        >
       {% else %}
-        <img src="{}" class="img-fluid rounded-circle" alt="Default Profile Image">
+        <img 
+          src="{% static 'images/default-profile.png' %}" 
+          class="img-fluid rounded-circle" 
+          alt="Default Profile Image"
+        >
       {% endif %}
     </div>
+
+    <!-- Profile details -->
     <div class="col-md-9">
       <dl class="row">
         <dt class="col-sm-3">Email:</dt>
@@ -33,6 +45,19 @@
 
         <dt class="col-sm-3">Accessibility Needs:</dt>
         <dd class="col-sm-9">{{ profile.accessibility_needs|linebreaksbr }}</dd>
+
+        {# ==== New Address Section ==== #}
+        <dt class="col-sm-3">Street Address:</dt>
+        <dd class="col-sm-9">{{ profile.street_address }}</dd>
+
+        <dt class="col-sm-3">City:</dt>
+        <dd class="col-sm-9">{{ profile.city }}</dd>
+
+        <dt class="col-sm-3">Postcode:</dt>
+        <dd class="col-sm-9">{{ profile.postcode }}</dd>
+
+        <dt class="col-sm-3">Country:</dt>
+        <dd class="col-sm-9">{{ profile.country }}</dd>
       </dl>
 
       <a href="{% url 'accounts:edit_profile' %}" class="btn btn-primary">Edit Profile</a>

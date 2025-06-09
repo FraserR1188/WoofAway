@@ -169,9 +169,4 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # STRIPE PAYMENT ENVIROMENT VARIABLES
-
-STRIPE_PUBLISHABLE_KEY = os.getenv("pk_test_51RXPDN2LfHWkSgoaXnLVGVlvg7ySawnHOKx7gjpwDrPafVaC9wvvwxLY9DkhTwONjeqwDuxhYBaCLmPgdRpWufkx00YCzP1doh")
-
-STRIPE_SECRET_KEY = os.getenv("sk_test_51RXPDN2LfHWkSgoa61LFFCe4IzNgAPgWZh7pi9Hga0xw36bunoQonSfFZfX0EhsmUyC60ccBaulW8aDdL7zHX2gi00YoCd6ONe")
-
 stripe.api_key = STRIPE_SECRET_KEY
