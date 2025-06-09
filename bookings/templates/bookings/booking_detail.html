@@ -63,13 +63,10 @@
     </dl>
   {% else %}
     {% if booking.status == "pending" %}
-  <a 
-    href="{% url 'payments:detail' booking.pk %}" 
-    class="btn btn-primary"
-  >
-    Pay Now
-  </a>
-{% endif %}
+    <a href="{% url 'payments:detail' booking.pk %}" class="btn btn-success">
+      Checkout & Pay
+    </a>
+    {% endif %}
   {% endif %}
 
   <div class="mt-4">

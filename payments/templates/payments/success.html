@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5" style="margin-top: 80px;">
+  <div class="text-center">
+    <h1 class="display-4 text-success">Payment Successful!</h1>
+    <p class="lead">
+      {% if booking %}
+        Your payment for Booking #{{ booking.pk }} 
+        (“{{ booking.listing.title }}”) has been processed.
+      {% else %}
+        Your payment has been processed.
+      {% endif %}
+    </p>
+    <hr class="my-4">
+
+    {% if booking %}
+      <a 
+        href="{% url 'bookings:booking_detail' booking.pk %}" 
+        class="btn btn-primary btn-lg"
+      >
+        View Your Booking
+      </a>
+    {% else %}
+      <a href="{% url 'home:index' %}" class="btn btn-primary btn-lg">
+        Go to Home
+      </a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

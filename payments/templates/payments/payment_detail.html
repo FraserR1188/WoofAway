@@ -26,6 +26,10 @@
     <div class="col-md-2">{{ form.postcode|as_crispy_field }}</div>
     <div class="col-md-6">{{ form.country|as_crispy_field }}</div>
 
+    {# HIDDEN fields for JS #}
+    <input type="hidden" id="id_name"  value="{{ user.get_full_name|default:user.username }}">
+    <input type="hidden" id="id_email" value="{{ user.email }}">
+
     {# Stripe Card Element mount point #}
     <div class="col-12">
       <label for="card-element" class="form-label">Card Details</label>
@@ -48,9 +52,10 @@
   <script src="https://js.stripe.com/v3/"></script>
   <script>
     // Expose these to your external JS
-    window.STRIPE_PUBLIC_KEY   = "{{ stripe_public_key }}";
+    window.STRIPE_PUBLIC_KEY = "{{ stripe_public_key }}";
     window.STRIPE_CLIENT_SECRET = "{{ stripe_client_secret }}";
-    window.BOOKING_PK          = "{{ booking.pk }}";
+    window.BOOKING_PK = "{{ booking.pk }}";
+    window.PAYMENT_SUCCESS_URL = "{% url 'payments:success' %}";
   </script>
   <script src="{% static 'payments/js/payment.js' %}"></script>
 {% endblock %}
