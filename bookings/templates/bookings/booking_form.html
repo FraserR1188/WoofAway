@@ -51,14 +51,10 @@
             {{ form.postcode|as_crispy_field }}
           </div>
           <div class="col-md-4">
-            {{ form.state|as_crispy_field }}
-          </div>
-          <div class="col-md-4">
             {{ form.country|as_crispy_field }}
           </div>
         </div>
       {% endblock %}
-
       <div class="form-check mt-3">
         {{ form.save_address|as_crispy_field }}
         {{ form.save_address.errors }}

@@ -69,27 +69,19 @@ class BookingCreateView(LoginRequiredMixin, CreateView):
     template_name = "bookings/booking_form.html"
 
     def dispatch(self, request, *args, **kwargs):
+        # Grab the listing we're booking
         self.listing = get_object_or_404(Listing, pk=kwargs["listing_id"])
         return super().dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self):
+        # Pass the user into the form so it can prefill the address
         kwargs = super().get_form_kwargs()
-        # Pass the user in so __init__ can prefill address
         kwargs["user"] = self.request.user
         return kwargs
 
     def form_valid(self, form):
-        # 1) If they asked to save the address, update their profile
-        if form.cleaned_data.get("save_address"):
-            profile = self.request.user.profile
-            profile.street_address = form.cleaned_data["street_address"]
-            profile.city = form.cleaned_data["city"]
-            profile.postcode = form.cleaned_data["postcode"]
-            profile.country = form.cleaned_data["country"]
-            profile.save()
-
-        # 2) Now create the booking (your existing logic)
-        booking = form.form_valid(user=self.request.user, listing=self.listing)
+        # Use your form.save(user, listing) helper
+        booking = form.save(user=self.request.user, listing=self.listing)
         return redirect(booking.get_absolute_url())
 
 

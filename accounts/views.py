@@ -10,7 +10,7 @@ def view_profile(request):
     Show the logged-in user’s profile with all address fields.
     """
     profile = request.user.profile
-    return render(request, "accounts/view_profile.html", {
+    return render(request, "accounts/profile.html", {
         "profile": profile
     })
 
@@ -29,6 +29,6 @@ def edit_profile(request):
     else:
         form = ProfileForm(instance=profile)
 
-    return render(request, "accounts/edit_profile.html", {
+    return render(request, "accounts/profile_edit.html", {
         "form": form
     })
