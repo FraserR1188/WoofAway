@@ -1,35 +1,57 @@
 {# bookings/templates/bookings/payment_detail.html #}
 {% extends "base.html" %}
+{% load static crispy_forms_tags %}
+
+{% block extra_css %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'bookings/css/payment.css' %}">
+{% endblock %}
 
 {% block content %}
-<div class="container py-4">
-  <h1>Payment for Booking #{{ payment.booking.pk }}</h1>
+<div class="container py-4" style="margin-top:80px;">
+  <h1>Payment for Booking #{{ booking.pk }}</h1>
+  <p>
+    {{ booking.listing.title }}<br>
+    Check-in: {{ booking.check_in }} – Check-out: {{ booking.check_out }}<br>
+    Total: £{{ booking.total_price }}
+  </p>
   <hr>
 
-  <dl class="row mb-4">
-    <dt class="col-sm-3">Booking:</dt>
-    <dd class="col-sm-9">
-      <a href="{% url 'bookings:booking_detail' payment.booking.pk %}">View Booking</a>
-    </dd>
+  <form id="payment-form" method="post" class="row g-3">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
 
-    <dt class="col-sm-3">Status:</dt>
-    <dd class="col-sm-9">
-      {% if payment.status == "pending" %}
-        <span class="badge bg-warning text-dark">Pending</span>
-      {% elif payment.status == "succeeded" %}
-        <span class="badge bg-success">Succeeded</span>
-      {% else %}
-        <span class="badge bg-danger">Failed</span>
-      {% endif %}
-    </dd>
+    {# billing address fields #}
+    <div class="col-md-6">{{ form.street_address|as_crispy_field }}</div>
+    <div class="col-md-4">{{ form.city|as_crispy_field }}</div>
+    <div class="col-md-2">{{ form.postcode|as_crispy_field }}</div>
+    <div class="col-md-6">{{ form.country|as_crispy_field }}</div>
 
-    <dt class="col-sm-3">Stripe Intent:</dt>
-    <dd class="col-sm-9">{{ payment.stripe_payment_intent }}</dd>
+    {# Stripe Card Element mount point #}
+    <div class="col-12">
+      <label for="card-element" class="form-label">Card Details</label>
+      <div id="card-element" class="StripeElement"></div>
+      <div id="card-errors" role="alert" class="text-danger mt-2"></div>
+    </div>
 
-    <dt class="col-sm-3">Timestamp:</dt>
-    <dd class="col-sm-9">{{ payment.timestamp|date:"M d, Y H:i" }}</dd>
-  </dl>
-
-  <a href="{% url 'bookings:booking_detail' payment.booking.pk %}" class="btn btn-secondary">Back to Booking</a>
+    <div class="col-12">
+      <button id="submit" class="btn btn-success">
+        Pay £{{ booking.total_price }}
+      </button>
+      <a href="{% url 'bookings:booking_detail' booking.pk %}" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+  {{ block.super }}
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>
+    // Expose these to your external JS
+    window.STRIPE_PUBLIC_KEY   = "{{ stripe_public_key }}";
+    window.STRIPE_CLIENT_SECRET = "{{ stripe_client_secret }}";
+    window.BOOKING_PK          = "{{ booking.pk }}";
+  </script>
+  <script src="{% static 'bookings/js/payment.js' %}"></script>
 {% endblock %}

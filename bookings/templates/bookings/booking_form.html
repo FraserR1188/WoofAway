@@ -38,27 +38,6 @@
       {{ form.check_in }}   {# HiddenInput #}
       {{ form.check_out }}  {# HiddenInput #}
 
-      {% block address_fields %}
-        <h5>Your Address</h5>
-        <div class="row g-3">
-          <div class="col-md-6">
-            {{ form.street_address|as_crispy_field }}
-          </div>
-          <div class="col-md-4">
-            {{ form.city|as_crispy_field }}
-          </div>
-          <div class="col-md-2">
-            {{ form.postcode|as_crispy_field }}
-          </div>
-          <div class="col-md-4">
-            {{ form.country|as_crispy_field }}
-          </div>
-        </div>
-      {% endblock %}
-      <div class="form-check mt-3">
-        {{ form.save_address|as_crispy_field }}
-        {{ form.save_address.errors }}
-      </div>
       
       <div class="col-12">
         <button type="submit" class="btn btn-primary">

@@ -24,7 +24,7 @@
     <dd class="col-sm-9">{{ booking.check_out }}</dd>
 
     <dt class="col-sm-3">Total Price:</dt>
-    <dd class="col-sm-9">${{ booking.total_price }}</dd>
+    <dd class="col-sm-9">£{{ booking.total_price }}</dd>
 
     <dt class="col-sm-3">Status:</dt>
     <dd class="col-sm-9">
@@ -62,25 +62,16 @@
       <dd class="col-sm-9">{{ booking.payment.timestamp|date:"M d, Y H:i" }}</dd>
     </dl>
   {% else %}
-    <p class="text-muted">No payment record for this booking yet.</p>
+    {% if booking.status == "pending" %}
+  <a 
+    href="{% url 'bookings:payment_detail' booking.pk %}" 
+    class="btn btn-primary"
+  >
+    Pay Now
+  </a>
+{% endif %}
   {% endif %}
 
-  <fieldset class="px-3">
-    <legend class="fieldset-label small text-black px-2 w-auto">Payment</legend>
-      <!-- A Stripe card element will go here -->
-      <div class="mb-3" id="card-element"></div>
-      <!-- Used to display form errors -->
-      <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
-  </fieldset>
-		<button id="submit-button" class="btn btn-black rounded-0">
-			<span class="font-weight-bold">Complete Order</span>
-		</button>
-		<p class="small text-danger my-0">
-			<span>Your card will be charged <strong>${{ grand_total|floatformat:2 }}</strong></span>
-		</p>
-	</div>
-
-  
   <div class="mt-4">
     <a href="{% url 'bookings:booking_list' %}" class="btn btn-secondary">Back to My Bookings</a>
 

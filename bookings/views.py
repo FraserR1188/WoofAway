@@ -5,6 +5,7 @@ from django.views.generic import (
     CreateView,
     UpdateView,
     View,
+    FormView
 )
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
@@ -14,11 +15,12 @@ from reviews.models import Review
 from .models import Booking, Payment
 from listings.models import Listing
 from accounts.models import UserProfile  # if you want to check host status
-from .forms import BookingForm  # import our custom form
+from .forms import BookingForm, PaymentDetailForm
 
 from django.urls import reverse
 from django.conf import settings
 import stripe
+
 
 
 class BookingListView(LoginRequiredMixin, ListView):
@@ -73,12 +75,6 @@ class BookingCreateView(LoginRequiredMixin, CreateView):
         self.listing = get_object_or_404(Listing, pk=kwargs["listing_id"])
         return super().dispatch(request, *args, **kwargs)
 
-    def get_form_kwargs(self):
-        # Pass the user into the form so it can prefill the address
-        kwargs = super().get_form_kwargs()
-        kwargs["user"] = self.request.user
-        return kwargs
-
     def form_valid(self, form):
         # Use your form.save(user, listing) helper
         booking = form.save(user=self.request.user, listing=self.listing)
@@ -130,23 +126,56 @@ class BookingCancelView(LoginRequiredMixin, UserPassesTestMixin, View):
         return redirect("bookings:booking_list")
 
 
-class PaymentDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
-    """
-    Display payment information for a booking. Only the guest or the host may view.
-    """
-    model = Payment
+class PaymentDetailView(LoginRequiredMixin, FormView):
     template_name = "bookings/payment_detail.html"
-    context_object_name = "payment"
+    form_class = PaymentDetailForm
 
-    def test_func(self):
-        payment = self.get_object()
-        booking = payment.booking
-        user = self.request.user
-        return (booking.guest == user) or (booking.listing.host == user)
+    def dispatch(self, request, *args, **kwargs):
+        # Load booking & its Payment
+        self.booking = get_object_or_404(
+            Booking, pk=kwargs["booking_pk"], guest=request.user
+        )
+        self.payment, _ = Payment.objects.get_or_create(booking=self.booking)
+        return super().dispatch(request, *args, **kwargs)
 
-    def handle_no_permission(self):
-        messages.error(self.request, "You do not have permission to view that payment.")
-        return redirect("bookings:booking_list")
+    def get_initial(self):
+        return {
+            "street_address": self.payment.street_address,
+            "city":           self.payment.city,
+            "postcode":       self.payment.postcode,
+            "country":        self.payment.country,
+        }
+
+    def get_context_data(self, **ctx):
+        ctx = super().get_context_data(**ctx)
+        ctx["booking"] = self.booking
+        ctx["stripe_public_key"] = settings.STRIPE_PUBLISHABLE_KEY
+
+        # Create or retrieve a PaymentIntent
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        amount_pence = int(self.booking.total_price * 100)
+        if not self.payment.stripe_payment_intent:
+            intent = stripe.PaymentIntent.create(
+                amount=amount_pence,
+                currency="gbp",
+                metadata={"booking_id": self.booking.pk},
+            )
+            self.payment.stripe_payment_intent = intent.id
+            self.payment.save()
+        else:
+            intent = stripe.PaymentIntent.retrieve(self.payment.stripe_payment_intent)
+
+        ctx["stripe_client_secret"] = intent.client_secret
+        return ctx
+
+    def form_valid(self, form):
+        # Save billing address
+        for field, val in form.cleaned_data.items():
+            setattr(self.payment, field, val)
+        self.payment.save()
+
+        # Re-render with session in context for the JS to pick up
+        return render(self.request, self.template_name, self.get_context_data(form=form))
 
 
 def create_checkout_session(request, listing_id):
@@ -213,3 +242,40 @@ class ConfirmBookingView(LoginRequiredMixin, UserPassesTestMixin, View):
         booking.save()
         messages.success(request, "Booking confirmed successfully.")
         return redirect("bookings:host_booking_list")
+
+class StripeCheckoutView(LoginRequiredMixin, View):
+    def get(self, request, booking_pk):
+        booking = get_object_or_404(Booking, pk=booking_pk, guest=request.user)
+        payment = booking.payment
+
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        session = stripe.checkout.Session.create(
+            payment_method_types=["card"],
+            line_items=[{
+                "price_data": {
+                    "currency": "usd",
+                    "product_data": {
+                        "name": f"Booking #{booking.pk} for {booking.listing.title}",
+                    },
+                    "unit_amount": booking.total_price * 100,
+                },
+                "quantity": 1,
+            }],
+            mode="payment",
+            success_url=settings.STRIPE_SUCCESS_URL + f"?booking_id={booking.pk}",
+            cancel_url=settings.STRIPE_CANCEL_URL + f"?booking_id={booking.pk}",
+            billing_address_collection="required",
+            customer_email=request.user.email,
+            metadata={
+                "booking_id": booking.pk,
+                # optionally include the address fields
+                "street_address": payment.street_address,
+                "city": payment.city,
+                "postcode": payment.postcode,
+                "country": payment.country,
+            },
+        )
+        # store PaymentIntent if needed
+        payment.stripe_payment_intent = session.payment_intent
+        payment.save()
+        return redirect(session.url, code=303)
