@@ -1,6 +1,7 @@
 {# bookings/templates/bookings/booking_form.html #}
 {% extends "base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block extra_css %}
   {{ block.super }}
@@ -37,6 +38,30 @@
       {{ form.check_in }}   {# HiddenInput #}
       {{ form.check_out }}  {# HiddenInput #}
 
+      <div class="col-12">
+        <h5>Your Address</h5>
+      </div>
+      <div class="col-md-6">
+        <label for="{{ form.street_address.id_for_label }}" class="form-label">Street Address</label>
+        {{ form.street_address|as_crispy_field }}
+        {{ form.street_address.errors }}
+      </div>
+      <div class="col-md-4">
+        <label for="{{ form.city.id_for_label }}" class="form-label">City</label>
+        {{ form.city|as_crispy_field }}
+        {{ form.city.errors }}
+      </div>
+      <div class="col-md-2">
+        <label for="{{ form.postcode.id_for_label }}" class="form-label">Postcode</label>
+        {{ form.postcode|as_crispy_field }}
+        {{ form.postcode.errors }}
+      </div>
+      <div class="col-md-4">
+        <label for="{{ form.country.id_for_label }}" class="form-label">Country</label>
+        {{ form.country|as_crispy_field }}
+        {{ form.country.errors }}
+      </div>
+      
       <div class="col-12">
         <button type="submit" class="btn btn-primary">
           {% if object %}Save Changes{% else %}Reserve Now{% endif %}

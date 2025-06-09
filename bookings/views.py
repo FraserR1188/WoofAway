@@ -65,25 +65,23 @@ class BookingDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 
 class BookingCreateView(LoginRequiredMixin, CreateView):
     model = Booking
-    form_class = BookingForm            # use our custom form instead of fields=[]
+    form_class = BookingForm
     template_name = "bookings/booking_form.html"
-    # get_absolute_url from Booking model will redirect to booking_detail
 
     def dispatch(self, request, *args, **kwargs):
-        # Ensure the listing exists
         self.listing = get_object_or_404(Listing, pk=kwargs["listing_id"])
         return super().dispatch(request, *args, **kwargs)
 
-    def form_valid(self, form):
-        # Set the guest and listing before saving
-        form.instance.guest = self.request.user
-        form.instance.listing = self.listing
-        return super().form_valid(form)
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        # Pass the user in so __init__ can prefill address
+        kwargs["user"] = self.request.user
+        return kwargs
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["listing"] = self.listing
-        return context
+    def form_valid(self, form):
+        # form_valid now needs both user and listing
+        booking = form.form_valid(user=self.request.user, listing=self.listing)
+        return redirect(booking.get_absolute_url())
 
 
 class BookingUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
