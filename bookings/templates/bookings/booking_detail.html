@@ -64,7 +64,7 @@
   {% else %}
     {% if booking.status == "pending" %}
   <a 
-    href="{% url 'bookings:payment_detail' booking.pk %}" 
+    href="{% url 'payments:detail' booking.pk %}" 
     class="btn btn-primary"
   >
     Pay Now

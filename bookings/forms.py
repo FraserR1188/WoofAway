@@ -4,8 +4,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from datetime import datetime
 
-from .models import Booking, Payment
-
+from .models import Booking
 
 class BookingForm(forms.ModelForm):
     # Visible date‐range picker
@@ -62,15 +61,3 @@ class BookingForm(forms.ModelForm):
         if commit:
             booking.save()
         return booking
-
-
-class PaymentDetailForm(forms.ModelForm):
-    class Meta:
-        model = Payment
-        fields = ["street_address", "city", "postcode", "country"]
-        widgets = {
-            "street_address": forms.TextInput(attrs={"class": "form-control"}),
-            "city":           forms.TextInput(attrs={"class": "form-control"}),
-            "postcode":       forms.TextInput(attrs={"class": "form-control"}),
-            "country":        forms.TextInput(attrs={"class": "form-control"}),
-        }

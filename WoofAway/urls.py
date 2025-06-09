@@ -39,4 +39,7 @@ urlpatterns = [
 
     # Messaging app
     path("messages/", include(("messaging.urls", "messaging"), namespace="messaging")),
+
+    #Payments app
+    path("payments/", include("payments.urls", namespace="payments")),
 ]

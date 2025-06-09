@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'bookings',
     'reviews',
     'messaging',
+    'payments',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

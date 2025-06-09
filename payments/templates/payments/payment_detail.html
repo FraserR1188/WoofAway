@@ -1,10 +1,9 @@
-{# bookings/templates/bookings/payment_detail.html #}
 {% extends "base.html" %}
 {% load static crispy_forms_tags %}
 
 {% block extra_css %}
   {{ block.super }}
-  <link rel="stylesheet" href="{% static 'bookings/css/payment.css' %}">
+  <link rel="stylesheet" href="{% static 'payments/css/payment.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -53,5 +52,5 @@
     window.STRIPE_CLIENT_SECRET = "{{ stripe_client_secret }}";
     window.BOOKING_PK          = "{{ booking.pk }}";
   </script>
-  <script src="{% static 'bookings/js/payment.js' %}"></script>
+  <script src="{% static 'payments/js/payment.js' %}"></script>
 {% endblock %}
