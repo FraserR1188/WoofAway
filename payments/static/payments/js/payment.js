@@ -63,21 +63,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (post) address.postal_code = post;
     if (country) address.country = country;
 
+    // Safely pull name/email
+    const nameField = document.getElementById('id_name');
+    const emailField = document.getElementById('id_email');
     const billing_details = {
-      name: document.getElementById('id_name')?.value.trim() || '',
-      email: document.getElementById('id_email')?.value.trim() || '',
+      name: nameField?.value.trim() || '',
+      email: emailField?.value.trim() || '',
       address,
     };
 
     // Confirm the Card Payment
     const { error, paymentIntent } = await stripe.confirmCardPayment(
       window.STRIPE_CLIENT_SECRET,
-      {
-        payment_method: {
-          card,
-          billing_details,
-        },
-      }
+      { payment_method: { card, billing_details } }
     );
 
     if (error) {

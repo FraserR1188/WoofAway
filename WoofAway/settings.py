@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'reviews',
     'messaging',
     'payments',
+    'django_countries',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
