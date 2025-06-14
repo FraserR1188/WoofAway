@@ -1,7 +1,64 @@
 /* custom.css */
 
+:root {
+  /* Your custom palette */
+  --color-blue: #4a90e2; /* Chefchaouen Blue */
+  --color-white: #f9f9f9; /* Seasalt */
+  --color-dark: #333333; /* Jet */
+  --color-beige: #bfae9c; /* Khaki */
+  --color-green: #a4d4ae; /* Celadon */
+
+  /* And accents, if you like */
+  --color-primary: var(--color-blue);
+  --color-secondary: var(--color-beige);
+  --color-success: #28a745; /* you can swap in --color-green if you prefer */
+}
+
 body {
   padding-top: 56px;
+}
+
+/* 1. Base body text, nav, buttons, form labels, etc. */
+body,
+button,
+input,
+select,
+textarea,
+.navbar,
+.nav-link,
+.btn,
+.form-label,
+.form-control {
+  font-family: 'Quicksand', sans-serif;
+}
+
+/* 2. Headings, logo, testimonials, special components… */
+h1, h2, h3, h4, h5, h6,
+.navbar-brand,
+.testimonial,      /* if you have a testimonial class */
+.logo,             /* if you have a logo class */
+.blockquote, 
+.blockquote-footer {
+  font-family: 'Caveat', cursive;
+}
+
+/* 3. Optional tweaks: */
+h1 {
+  font-weight: 700;
+}
+h2,
+h3 {
+  font-weight: 500;
+}
+
+/* 4. Ensure buttons keep Quicksand but get a bit more letter-spacing */
+.btn {
+  letter-spacing: 0.5px;
+}
+
+/* 5. If you want your site title / brand to be Caveat: */
+.navbar-brand {
+  font-size: 1.75rem;
 }
 
 /* Increase spacing around flash messages */
