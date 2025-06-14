@@ -1,13 +1,13 @@
 # reviews/urls.py
 
 from django.urls import path
-from . import views
+from .views import ReviewListView, ReviewCreateView, ReviewUpdateView, ReviewDeleteView
 
 app_name = "reviews"
 
 urlpatterns = [
-    path("create/<int:listing_id>/", views.ReviewCreateView.as_view(), name="review_create"),
-    path("<int:pk>/edit/", views.ReviewUpdateView.as_view(), name="review_edit"),
-    path("<int:pk>/delete/", views.ReviewDeleteView.as_view(), name="review_delete"),
-    path("my/", views.MyReviewsView.as_view(), name="my_reviews"),
+    path("", ReviewListView.as_view(), name="review_list"),
+    path("create/<int:listing_pk>/", ReviewCreateView.as_view(), name="review_create"),
+    path("<int:pk>/edit/",    ReviewUpdateView.as_view(), name="review_edit"),
+    path("<int:pk>/delete/",  ReviewDeleteView.as_view(), name="review_delete"),
 ]

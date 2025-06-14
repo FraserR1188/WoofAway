@@ -100,3 +100,10 @@ class MyReviewsView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Review.objects.filter(guest=self.request.user).select_related("listing")
+    
+
+class ReviewListView(LoginRequiredMixin, ListView):
+    model = Review
+    template_name = "reviews/review_list.html"
+    context_object_name = "reviews"
+    paginate_by = 10

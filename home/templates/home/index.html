@@ -1,17 +1,21 @@
 {% extends "base.html" %}
-
 {% load static %}
 
 {% block content %}
   <!-- =========================
        HERO / JUMBOTRON SECTION
   =========================== -->
-  <section class="hero-section text-center text-white py-5">
+  <section class="hero-section text-center text-white py-5" style="background: var(--color-primary);">
     <div class="container hero-content">
+        <img 
+          src="{% static 'images/woofaway-logo.png' %}" 
+          alt="WoofAway logo" 
+          class="img-fluid" 
+          style="max-height: 300px;"
+        >
       <h1 class="display-4 fw-bold">Find the Perfect Home for Your Pup</h1>
       <p class="lead mb-4">
-        Discover pet-friendly stays, trusted hosts, and worry-free
-        dogboarding experiences.
+        Discover pet-friendly stays, trusted hosts, and worry-free dogboarding experiences.
       </p>
       <a
         href="{% url 'listings:listing_list' %}"
@@ -21,14 +25,14 @@
       </a>
       {% if user.is_authenticated and user.profile.is_host %}
         <a
-          href=""
+          href="{% url 'listings:listing_create' %}"
           class="btn btn-success btn-lg px-4"
         >
           Create a Listing
         </a>
       {% else %}
         <a
-          href=""
+          href="{% url 'account_signup' %}"
           class="btn btn-success btn-lg px-4"
         >
           Become a Host
@@ -46,8 +50,7 @@
         <div class="col-md-8 mx-auto">
           <h2 class="fw-bold">Why Choose WoofAway?</h2>
           <p class="text-muted">
-            We make petboarding simple, secure, and personal. Get to know
-            our top features:
+            We make petboarding simple, secure, and personal. Get to know our top features:
           </p>
         </div>
       </div>
@@ -59,10 +62,9 @@
               <i class="bi bi-search feature-icon mb-3"></i>
               <h5 class="card-title">Easy Search</h5>
               <p class="card-text text-muted">
-                Browse thousands of verified pet-friendly listings near you
-                in seconds.
+                Browse thousands of verified pet-friendly listings near you in seconds.
               </p>
-              <a href="" class="stretched-link text-primary">See Listings</a>
+              <a href="{% url 'listings:listing_list' %}" class="stretched-link text-primary">See Listings</a>
             </div>
           </div>
         </div>
@@ -73,10 +75,9 @@
               <i class="bi bi-people feature-icon mb-3"></i>
               <h5 class="card-title">Trusted Hosts</h5>
               <p class="card-text text-muted">
-                All our hosts are vetted, pet lovers with stellar reviews from
-                fellow dog owners.
+                All our hosts are vetted, pet lovers with stellar reviews from fellow dog owners.
               </p>
-              <a href="" class="stretched-link text-primary">Read Reviews</a>
+              <a href="{% url 'reviews:review_list' %}" class="stretched-link text-primary">Read Reviews</a>
             </div>
           </div>
         </div>
@@ -87,10 +88,9 @@
               <i class="bi bi-calendar-check feature-icon mb-3"></i>
               <h5 class="card-title">Book with Confidence</h5>
               <p class="card-text text-muted">
-                Secure payment processing, instant confirmations, and easy
-                cancellations if plans change.
+                Secure payment processing, instant confirmations, and easy cancellations if plans change.
               </p>
-              <a href="" class="stretched-link text-primary">View Your Bookings</a>
+              <a href="{% url 'bookings:booking_list' %}" class="stretched-link text-primary">View Your Bookings</a>
             </div>
           </div>
         </div>
