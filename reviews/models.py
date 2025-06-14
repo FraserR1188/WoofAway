@@ -1,9 +1,6 @@
 from django.db import models
 from django.conf import settings
 from listings.models import Listing
-from storages.backends.s3boto3 import S3Boto3Storage
-
-s3 = S3Boto3Storage()
 
 
 class Review(models.Model):
