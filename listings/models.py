@@ -1,5 +1,8 @@
 from django.db import models
 from django.conf import settings
+from storages.backends.s3boto3 import S3Boto3Storage
+
+s3 = S3Boto3Storage()
 
 
 class Category(models.Model):
@@ -21,6 +24,7 @@ class Listing(models.Model):
     is_accessible = models.BooleanField(default=False)
     dog_policy = models.TextField(blank=True)
     image = models.ImageField(
+        storage=s3,
         upload_to="listings/",
         blank=True,
         null=True,

@@ -1,6 +1,10 @@
 from django.db import models
 from django.conf import settings
 from listings.models import Listing
+from storages.backends.s3boto3 import S3Boto3Storage
+
+s3 = S3Boto3Storage()
+
 
 class Review(models.Model):
     RATING_CHOICES = [(i, f"{i} Star{'s' if i>1 else ''}") for i in range(1, 6)]
