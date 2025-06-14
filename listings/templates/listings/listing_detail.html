@@ -1,79 +1,105 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>{{ listing.title }}</h1>
-  <p>Category: {{ listing.category }}</p>
-  <p>Location: {{ listing.location }}</p>
-  <p>Price per night: ${{ listing.price_per_night }}</p>
-  <p>{{ listing.description }}</p>
+  <div class="container py-4">
 
-  <a href="{% url 'listings:listing_edit' listing.pk %}">Edit this listing</a>
-  <br>
-  <a href="{% url 'listings:listing_list' %}">Back to all listings</a>
+    {# === Listing Image === #}
+    {% if listing.image %}
+      <div class="mb-4 text-center">
+        <img 
+          src="{{ listing.image.url }}" 
+          alt="{{ listing.title }}" 
+          class="img-fluid rounded" 
+          style="max-height: 400px; object-fit: cover;"
+        >
+      </div>
+    {% endif %}
 
-  {# ==== Reviews Section ==== #}
-  <div class="mt-5">
-    <h3>Reviews</h3>
-    {% if listing.reviews.exists %}
-      <ul class="list-group mb-4">
-        {% for review in listing.reviews.all %}
-          <li class="list-group-item">
-            <div class="d-flex justify-content-between align-items-start">
-              <div>
-                <strong>{{ review.guest.username }}</strong>
-                <small class="text-muted">– {{ review.created_at|date:"M d, Y" }}</small>
-                <div class="mb-2">
-                  {# ===== REVISED STAR‐DISPLAY USING slice ===== #}
-                  {# Show '★' for each filled star, then '☆' for the remainder, up to 5 total. #}
+    <h1>{{ listing.title }}</h1>
+    <p><strong>Category:</strong> {{ listing.category }}</p>
+    <p><strong>Location:</strong> {{ listing.location }}</p>
+    <p><strong>Price per night:</strong> £{{ listing.price_per_night }}</p>
+    <p>{{ listing.description }}</p>
 
+    <div class="mt-4">
+      <a href="{% url 'listings:listing_edit' listing.pk %}" class="btn btn-outline-secondary me-2">
+        Edit this listing
+      </a>
+      <a href="{% url 'listings:listing_list' %}" class="btn btn-outline-primary">
+        Back to all listings
+      </a>
+    </div>
+
+    {# ==== Reviews Section ==== #}
+    <div class="mt-5">
+      <h3>Reviews</h3>
+      {% if listing.reviews.exists %}
+        <ul class="list-group mb-4">
+          {% for review in listing.reviews.all %}
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <strong>{{ review.guest.username }}</strong>
+                  <small class="text-muted">– {{ review.created_at|date:"M d, Y" }}</small>
                   <div class="mb-2">
-                    {# First, take the first review.rating characters of "12345": these become filled stars #}
+                    {# Filled stars #}
                     {% for _ in "12345"|slice:":{{ review.rating }}" %}
                       <span class="text-warning">&#9733;</span>
                     {% endfor %}
-
-                    {# Next, take characters from index review.rating to the end: these become empty stars #}
+                    {# Empty stars #}
                     {% for _ in "12345"|slice:"{{ review.rating }}:" %}
                       <span class="text-muted">&#9734;</span>
                     {% endfor %}
                   </div>
+                  <p>{{ review.comment }}</p>
                 </div>
-                <p>{{ review.comment }}</p>
+                {% if user == review.guest %}
+                  <div>
+                    <a 
+                      href="{% url 'reviews:review_edit' review.pk %}" 
+                      class="btn btn-sm btn-outline-secondary me-1"
+                    >
+                      Edit
+                    </a>
+                    <a 
+                      href="{% url 'reviews:review_delete' review.pk %}" 
+                      class="btn btn-sm btn-outline-danger"
+                    >
+                      Delete
+                    </a>
+                  </div>
+                {% endif %}
               </div>
-              {# If it’s the current user’s review, show edit link: #}
-              {% if user == review.guest %}
-                <div>
-                  <a href="{% url 'reviews:review_edit' review.pk %}" class="btn btn-sm btn-outline-secondary me-1">Edit</a>
-                  <a href="{% url 'reviews:review_delete' review.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
-                </div>
-              {% endif %}
-            </div>
-          </li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p class="text-muted">No reviews yet. Be the first to leave one!</p>
-    {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="text-muted">No reviews yet. Be the first to leave one!</p>
+      {% endif %}
+    </div>
 
-  {% if user.is_authenticated %}
-  {% if user != listing.host %}
-    <a 
-      href="{% url 'bookings:booking_create' listing.pk %}" 
-      class="btn btn-primary mb-3"
-    >
-      Book Now
-    </a>
-  {% else %}
-    <p class="text-muted">You’re the host of this listing.</p>
-  {% endif %}
-{% else %}
-  <a 
-    href="{% url 'account_login' %}?next={% url 'bookings:booking_create' listing.pk %}" 
-    class="btn btn-primary mb-3"
-  >
-    Login to Book
-  </a>
-{% endif %}
+    {# ==== Booking CTA ==== #}
+    <div class="mt-4">
+      {% if user.is_authenticated %}
+        {% if user != listing.host %}
+          <a 
+            href="{% url 'bookings:booking_create' listing.pk %}" 
+            class="btn btn-primary mb-3"
+          >
+            Book Now
+          </a>
+        {% else %}
+          <p class="text-muted">You’re the host of this listing.</p>
+        {% endif %}
+      {% else %}
+        <a 
+          href="{% url 'account_login' %}?next={% url 'bookings:booking_create' listing.pk %}" 
+          class="btn btn-primary mb-3"
+        >
+          Login to Book
+        </a>
+      {% endif %}
+    </div>
 
-
+  </div>
 {% endblock %}
