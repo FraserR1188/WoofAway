@@ -2,24 +2,22 @@
 {% load static %}
 
 {% block content %}
-  <!-- =========================
-       HERO / JUMBOTRON SECTION
-  =========================== -->
-  <section class="hero-section text-center text-white py-5" style="background: var(--color-primary);">
+  <!-- HERO SECTION -->
+  <section class="hero-section text-center text-dark py-5">
     <div class="container hero-content">
-        <img 
-          src="{% static 'images/woofaway-logo.png' %}" 
-          alt="WoofAway logo" 
-          class="img-fluid" 
-          style="max-height: 300px;"
-        >
+      <img 
+        src="{% static 'images/woofaway-logo.png' %}"
+        alt="WoofAway logo"
+        class="img-fluid mb-4"
+        style="max-height: 400px;"
+      >
       <h1 class="display-4 fw-bold">Find the Perfect Home for Your Pup</h1>
       <p class="lead mb-4">
         Discover pet-friendly stays, trusted hosts, and worry-free dogboarding experiences.
       </p>
       <a
         href="{% url 'listings:listing_list' %}"
-        class="btn btn-secondary btn-lg px-4 me-2"
+        class="btn btn-rect-to-round btn-rect-to-round--black btn-lg px-4 me-2"
       >
         Browse Listings
       </a>
@@ -33,7 +31,7 @@
       {% else %}
         <a
           href="{% url 'account_signup' %}"
-          class="btn btn-success btn-lg px-4"
+          class="btn btn-rect-to-round btn-rect-to-round--black btn-lg px-4"
         >
           Become a Host
         </a>
@@ -41,15 +39,13 @@
     </div>
   </section>
 
-  <!-- =========================
-       FEATURES / HIGHLIGHTS
-  =========================== -->
-  <section class="py-5">
+  <!-- FEATURES SECTION -->
+  <section class="features-section text-center text-white py-5">
     <div class="container">
-      <div class="row mb-4 text-center">
+      <div class="row mb-4">
         <div class="col-md-8 mx-auto">
           <h2 class="fw-bold">Why Choose WoofAway?</h2>
-          <p class="text-muted">
+          <p class="text-light">
             We make petboarding simple, secure, and personal. Get to know our top features:
           </p>
         </div>
@@ -59,7 +55,7 @@
         <div class="col-md-4">
           <div class="card h-100 border-0 shadow-sm">
             <div class="card-body text-center">
-              <i class="bi bi-search feature-icon mb-3"></i>
+              <i class="bi bi-search feature-icon mb-3 fs-1" style="color: var(--color-primary);"></i>
               <h5 class="card-title">Easy Search</h5>
               <p class="card-text text-muted">
                 Browse thousands of verified pet-friendly listings near you in seconds.
@@ -72,7 +68,7 @@
         <div class="col-md-4">
           <div class="card h-100 border-0 shadow-sm">
             <div class="card-body text-center">
-              <i class="bi bi-people feature-icon mb-3"></i>
+              <i class="bi bi-people feature-icon mb-3 fs-1" style="color: var(--color-primary);"></i>
               <h5 class="card-title">Trusted Hosts</h5>
               <p class="card-text text-muted">
                 All our hosts are vetted, pet lovers with stellar reviews from fellow dog owners.
@@ -85,7 +81,7 @@
         <div class="col-md-4">
           <div class="card h-100 border-0 shadow-sm">
             <div class="card-body text-center">
-              <i class="bi bi-calendar-check feature-icon mb-3"></i>
+              <i class="bi bi-calendar-check feature-icon mb-3 fs-1" style="color: var(--color-primary);"></i>
               <h5 class="card-title">Book with Confidence</h5>
               <p class="card-text text-muted">
                 Secure payment processing, instant confirmations, and easy cancellations if plans change.

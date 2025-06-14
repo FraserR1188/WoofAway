@@ -1,26 +1,38 @@
 /* custom.css */
 
 :root {
-  /* Your custom palette */
+  /* Color Palette */
   --color-blue: #4a90e2; /* Chefchaouen Blue */
-  --color-white: #f9f9f9; /* Seasalt */
+  --color-white: #f3eee3; /* Seasalt */
   --color-dark: #333333; /* Jet */
   --color-beige: #bfae9c; /* Khaki */
   --color-green: #a4d4ae; /* Celadon */
 
-  /* And accents */
   --color-primary: var(--color-blue);
   --color-secondary: var(--color-beige);
   --color-success: var(--color-green);
 }
 
+/* Reset and Base */
 body {
   padding-top: 56px;
   background-color: var(--color-white);
   color: var(--color-dark);
+  font-family: 'Quicksand', sans-serif;
+}
+a,
+a:link,
+a:visited {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+a:hover,
+a:focus {
+  color: var(--color-green);
+  text-decoration: underline;
 }
 
-/* Navbar background + text */
+/* Navbar */
 .navbar-dark {
   background-color: var(--color-dark) !important;
 }
@@ -29,56 +41,86 @@ body {
   color: var(--color-white) !important;
 }
 
-/* ========== BUTTONS ========== */
-/* Universal smooth brightness transition for buttons */
+/* Buttons */
 .btn {
-  transition: filter 0.2s ease-in-out;
-  letter-spacing: 0.5px;
-  filter: brightness(0.9); /* slightly darker by default */
-}
-.btn:hover,
-.btn:focus {
-  filter: brightness(1.1); /* lighten on hover */
+  font-family: Quicksand, sans-serif;
+  text-transform: uppercase;
 }
 
-/* Specific overrides for primary/secondary/success variants */
+.btn-center {
+  text-align: center;
+}
+
+.btn:hover .btn-slide-show-text1 {
+  margin-left: 65px;
+}
+
+.btn-rect-to-round {
+  height: 55px;
+  width: 200px;
+  font-size: 16px;
+  font-weight: 600;
+  background: transparent;
+  cursor: pointer;
+  transition: 0.5s ease-in;
+}
+
+.btn-rect-to-round:hover {
+  border-radius: 60px;
+  color: rgb(255, 255, 255) !important;
+}
+
+.btn-rect-to-round--black {
+  border: 2px solid rgb(191, 174, 156);
+  color: rgb(191, 174, 156) !important;
+}
+
+.btn-rect-to-round--black:hover {
+  border-color: rgb(191, 174, 156);
+  background: rgb(191, 174, 156);
+}
+
+/* .btn {
+  transition: filter 0.2s ease-in-out;
+  letter-spacing: 0.5px;
+} */
 .btn-primary {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
-  filter: brightness(0.9);
+}
+.btn-primary:hover,
+.btn-primary:focus {
+  filter: brightness(1.1);
 }
 .btn-secondary {
   background-color: var(--color-secondary);
   border-color: var(--color-secondary);
   color: var(--color-white);
-  filter: brightness(0.9);
+}
+.btn-secondary:hover,
+.btn-secondary:focus {
+  filter: brightness(1.1);
 }
 .btn-success {
   background-color: var(--color-success);
   border-color: var(--color-success);
-  filter: brightness(0.9);
+}
+.btn-success:hover,
+.btn-success:focus {
+  filter: brightness(1.1);
 }
 
-/* Card styling */
+/* Card */
 .card {
   border: 1px solid #e5e5e5;
+  font-family: 'Quicksand', sans-serif;
 }
 .card-header {
   background-color: var(--color-blue);
   color: var(--color-white);
 }
 
-/* Links */
-a {
-  color: var(--color-primary);
-}
-a:hover,
-a:focus {
-  color: var(--color-green);
-  text-decoration: none;
-}
-
-/* Flash messages */
+/* Flash Messages */
 .message-container {
   position: fixed;
   top: 60px;
@@ -94,30 +136,17 @@ a:focus {
   }
 }
 
-/* Booking form header spacing */
-.booking-header {
-  margin-bottom: 30px;
-}
-
-/* Flatpickr overrides */
-.flatpickr-calendar {
-  font-size: 0.9rem;
-}
-
-/* ========== TYPOGRAPHY ========== */
-body,
+/* Forms */
+.form-label,
+.form-control,
 button,
 input,
 select,
-textarea,
-.navbar,
-.nav-link,
-.btn,
-.form-label,
-.form-control {
+textarea {
   font-family: 'Quicksand', sans-serif;
 }
 
+/* Typography */
 h1,
 h2,
 h3,
@@ -125,13 +154,12 @@ h4,
 h5,
 h6,
 .navbar-brand,
-.testimonial,
 .logo,
+.testimonial,
 .blockquote,
 .blockquote-footer {
   font-family: 'Caveat', cursive;
 }
-
 h1 {
   font-weight: 700;
 }
@@ -139,7 +167,36 @@ h2,
 h3 {
   font-weight: 500;
 }
-
 .navbar-brand {
   font-size: 1.75rem;
+}
+
+/* Booking form spacing */
+.booking-header {
+  margin-bottom: 30px;
+}
+.flatpickr-calendar {
+  font-size: 0.9rem;
+}
+
+/* Page-specific overrides */
+.hero-section {
+  background-color: var(--color-white) !important;
+}
+/* Ensure navbar links dark on hero */
+.hero-section .navbar-brand,
+.hero-section .nav-link {
+  color: var(--color-dark) !important;
+}
+/* Features section blue background */
+.features-section {
+  background-color: var(--color-primary) !important;
+}
+/* Feature cards lift on hover */
+.features-section .card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.features-section .card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
