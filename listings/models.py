@@ -23,6 +23,7 @@ class Listing(models.Model):
     image = models.ImageField(upload_to="listings/images/",
                               blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to="listings/")
 
     def __str__(self):
         return self.title
