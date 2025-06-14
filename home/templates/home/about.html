@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block extra_title %}– About Us{% endblock %}
+{% load static %}
+
+{% block page_header %}
+<section class="bg-primary text-white text-center py-5">
+  <div class="container">
+    <h1 class="display-4 fw-bold">About WoofAway</h1>
+    <p class="lead">Our story, our mission, and the team behind your pet's perfect stay</p>
+  </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <!-- Mission -->
+  <div class="row align-items-center mb-5">
+    <div class="col-md-6">
+      <h2>Our Mission</h2>
+      <p>At WoofAway, we believe every pup deserves a loving home-away-from-home. Founded by two dog-lovers, we make petboarding safe, personal and stress-free.</p>
+    </div>
+    <div class="col-md-6">
+      <img src="{% static 'images/happy-dog.png' %}" class="img-fluid rounded align-center" alt="Happy dog" style="max-height: 300px">
+    </div>
+  </div>
+
+  <!-- Team -->
+  <h2 class="mb-4 text-center">Meet the Founders</h2>
+  <div class="row g-4">
+    <!-- Robbie -->
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Robbie Smith</h5>
+          <p class="card-text">Co-Founder & CTO. Dog walker turned developer, Robbie built the WoofAway platform to connect pet owners with vet-approved hosts.</p>
+        </div>
+      </div>
+    </div>
+    <!-- Jocelyn -->
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Jocelyn Lee</h5>
+          <p class="card-text">Co-Founder & CEO. Passionate about animal welfare, Jocelyn oversees community partnerships and ensures every stay is top-notch.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQs accordion -->
+  <h2 class="mt-5 mb-3 text-center">Why WoofAway?</h2>
+  <div class="accordion" id="faqAccordion">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faq1-header">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+          How do you vet hosts?
+        </button>
+      </h2>
+      <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Every host completes a background check, submits home photos, and undergoes a video interview.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faq2-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+          What if my plans change?
+        </button>
+      </h2>
+      <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          You can cancel up to 48 hours in advance for a full refund, or reschedule for free.
+        </div>
+      </div>
+    </div>
+    <!-- add more as needed -->
+  </div>
+</div>
+{% endblock %}

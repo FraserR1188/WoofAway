@@ -1,10 +1,36 @@
-# accounts/urls.py
-from django.urls import path
-from . import views
+from django.urls import path, reverse_lazy
+from django.contrib.auth.views import LoginView, LogoutView
+from .views import SignUpView, ProfileView, EditProfileView
 
 app_name = "accounts"
 
 urlpatterns = [
-    path("profile/", views.view_profile, name="view_profile"),
-    path("profile/edit/", views.edit_profile, name="edit_profile"),
+    # login/logout powered by Django auth
+    path(
+        "login/",
+        LoginView.as_view(template_name="accounts/login.html"),
+        name="login"
+    ),
+    path(
+        "logout/",
+        LogoutView.as_view(next_page=reverse_lazy("home:index")),
+        name="logout"
+    ),
+    # custom signup from allauth
+    path(
+        "signup/",
+        SignUpView.as_view(),
+        name="signup"
+    ),
+    # profile views
+    path(
+        "profile/",
+        ProfileView.as_view(),
+        name="view_profile"
+    ),
+    path(
+        "profile/edit/",
+        EditProfileView.as_view(),
+        name="edit_profile"
+    ),
 ]

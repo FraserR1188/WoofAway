@@ -20,7 +20,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
 
     # Home app
-    path("", include("home.urls")),
+    path("", include(("home.urls", "home"), namespace="home")),
 
     # Allauth (login, signup, logout, etc.)
     path("accounts/", include("allauth.urls")),
