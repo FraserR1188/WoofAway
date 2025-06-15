@@ -192,28 +192,26 @@ stripe.api_key = STRIPE_SECRET_KEY
 STRIPE_SUCCESS_URL = "http://localhost:8000/bookings/payment-success/"
 STRIPE_CANCEL_URL = "http://localhost:8000/bookings/payment-cancel/"
 
-if 'USE_AWS' in os.environ:
-    #bucket config
+# Pull AWS on only if you've set USE_AWS in Heroku config:
+if os.environ.get('USE_AWS'):
+    # S3 bucket config
     AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
     AWS_STORAGE_BUCKET_NAME = "woof-away"
     AWS_S3_REGION_NAME = "eu-west-2"
     AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+    AWS_S3_SIGNATURE_VERSION = "s3v4"
+    AWS_DEFAULT_ACL = "public-read"
+    AWS_QUERYSTRING_AUTH = False
 
-    #static files
-    STATICFILES_STORAGE = 'custom_storages.StaticStorage'
-    STATICFILES_LOCATION = 'static'
-    DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
-    MEDIAFILES_LOCATION = 'media'
+    # tell django-storages where to put static vs media
+    STATICFILES_LOCATION = "static"
+    MEDIAFILES_LOCATION = "media"
 
-    # Override static and media URLs in production
-    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
-    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
+    # URLs that browsers will use
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/"
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/"
 
-
-AWS_LOCATION = "media"
-AWS_DEFAULT_ACL = "public-read"
-AWS_QUERYSTRING_AUTH = False
-AWS_S3_SIGNATURE_VERSION = "s3v4"
-
-DEFAULT_FILE_STORAGE = "WoofAway.storages.backends.s3boto3.S3Boto3Storage"
+    # Use your custom backends (must live in WoofAway/custom_storages.py)
+    STATICFILES_STORAGE = "WoofAway.custom_storages.StaticStorage"
+    DEFAULT_FILE_STORAGE = "WoofAway.custom_storages.MediaStorage"
