@@ -23,7 +23,7 @@ body {
 a,
 a:link,
 a:visited {
-  color: var(--color-primary);
+  color: #333333;
   text-decoration: none;
 }
 a:hover,
@@ -45,6 +45,8 @@ a:focus {
 .btn {
   font-family: Quicksand, sans-serif;
   text-transform: uppercase;
+  /* Ensure no underline on buttons */
+  text-decoration: none !important;
 }
 
 .btn-center {
@@ -56,7 +58,7 @@ a:focus {
 }
 
 .btn-rect-to-round {
-  height: 55px;
+  height: 65px;
   width: 200px;
   font-size: 16px;
   font-weight: 600;
@@ -80,18 +82,23 @@ a:focus {
   background: rgb(191, 174, 156);
 }
 
-/* .btn {
-  transition: filter 0.2s ease-in-out;
-  letter-spacing: 0.5px;
-} */
+/* Primary solid button */
 .btn-primary {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
+  color: var(--color-white);
+}
+.btn-primary:hover,
+.btn-primary:focus {
+  filter: brightness(1.1);
+  color: var(--color-white);
 }
 .btn-primary:hover,
 .btn-primary:focus {
   filter: brightness(1.1);
 }
+
+/* Secondary solid button */
 .btn-secondary {
   background-color: var(--color-secondary);
   border-color: var(--color-secondary);
@@ -101,6 +108,8 @@ a:focus {
 .btn-secondary:focus {
   filter: brightness(1.1);
 }
+
+/* Success solid button */
 .btn-success {
   background-color: var(--color-success);
   border-color: var(--color-success);
@@ -108,6 +117,33 @@ a:focus {
 .btn-success:hover,
 .btn-success:focus {
   filter: brightness(1.1);
+}
+
+/* Outline Buttons */
+.btn-outline-primary {
+  color: var(--color-primary);
+  background-color: transparent;
+  border: 1px solid var(--color-primary);
+  text-decoration: none;
+}
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+.btn-outline-secondary {
+  color: var(--color-secondary);
+  background-color: transparent;
+  border: 1px solid var(--color-secondary);
+  text-decoration: none;
+}
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+  text-decoration: none;
 }
 
 /* Card */

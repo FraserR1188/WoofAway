@@ -1,35 +1,49 @@
-# listings/views.py
-
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.http import Http404
 from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Listing
 
-# — Existing ListView —
 class ListingListView(ListView):
     model = Listing
     template_name = "listings/listing_list.html"
     context_object_name = "listings"
-    # (You can add paginate_by, ordering, etc., later)
+    # paginate_by = 12  # optional
 
-# — Stub DetailView —
 class ListingDetailView(DetailView):
     model = Listing
     template_name = "listings/listing_detail.html"
     context_object_name = "listing"
-    # Later you might override get_context_data() or add permissions
 
-# — Stub CreateView (needs form fields) —
-class ListingCreateView(CreateView):
+class ListingCreateView(LoginRequiredMixin, CreateView):
     model = Listing
     template_name = "listings/listing_form.html"
-    # For now, let’s say you want to allow creating only title and description.
-    fields = ["host", "category", "title", "description", "location", "price_per_night", "is_accessible", "dog_policy", "image"]
-    # When the form is valid, redirect back to the listing-list page:
+    fields = [
+        "category", "title", "description", "location",
+        "price_per_night", "is_accessible", "dog_policy", "image"
+    ]
     success_url = reverse_lazy("listings:listing_list")
 
-# — Stub UpdateView (analogous to CreateView) —
-class ListingUpdateView(UpdateView):
+    def form_valid(self, form):
+        # automatically set the host to the current user
+        form.instance.host = self.request.user
+        return super().form_valid(form)
+
+class ListingUpdateView(LoginRequiredMixin,
+                        UserPassesTestMixin,
+                        UpdateView):
     model = Listing
     template_name = "listings/listing_form.html"
-    fields = ["host", "category", "title", "description", "location", "price_per_night", "is_accessible", "dog_policy", "image"]
+    fields = [
+        "category", "title", "description", "location",
+        "price_per_night", "is_accessible", "dog_policy", "image"
+    ]
     success_url = reverse_lazy("listings:listing_list")
+
+    def test_func(self):
+        # only allow the owner to edit
+        return self.get_object().host == self.request.user
+
+    def handle_no_permission(self):
+        # optional: return 404 rather than redirect to login
+        raise Http404("You do not have permission to edit this listing.")

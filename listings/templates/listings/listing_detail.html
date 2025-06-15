@@ -22,9 +22,12 @@
     <p>{{ listing.description }}</p>
 
     <div class="mt-4">
-      <a href="{% url 'listings:listing_edit' listing.pk %}" class="btn btn-outline-secondary me-2">
-        Edit this listing
-      </a>
+      {# only show “Edit” to the logged-in host #}
+      {% if user.is_authenticated and listing.host == user %}
+        <a href="{% url 'listings:listing_edit' listing.pk %}" class="btn btn-outline-secondary me-2">
+          Edit this listing
+        </a>
+      {% endif %}
       <a href="{% url 'listings:listing_list' %}" class="btn btn-outline-primary">
         Back to all listings
       </a>

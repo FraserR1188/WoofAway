@@ -6,7 +6,7 @@
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h1 class="h3 mb-0">All Listings</h1>
 
-    {# only show for authenticated hosts #}
+    {# only show “Create” for authenticated hosts #}
     {% if user.is_authenticated and user.profile.is_host %}
       <a href="{% url 'listings:listing_create' %}" class="btn btn-success">
         Create New Listing
@@ -38,12 +38,23 @@
             <h5 class="card-title">{{ listing.title }}</h5>
             <p class="text-muted mb-2">£{{ listing.price_per_night }} / night</p>
             <p class="card-text text-truncate mb-4">{{ listing.location }}</p>
+
             <a
               href="{% url 'listings:listing_detail' listing.pk %}"
               class="btn btn-rect-to-round btn-rect-to-round--black align-self-center mt-auto"
             >
               View Details
             </a>
+
+            {# only show “Edit” if the logged-in user owns this listing #}
+            {% if user.is_authenticated and listing.host == user %}
+              <a
+                href="{% url 'listings:listing_edit' listing.pk %}"
+                class="btn btn-outline-primary align-self-center mt-2"
+              >
+                Edit
+              </a>
+            {% endif %}
           </div>
         </div>
       </div>
