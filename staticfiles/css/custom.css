@@ -1,0 +1,254 @@
+/* custom.css */
+
+:root {
+  /* Color Palette */
+  --color-blue: #4a90e2; /* Chefchaouen Blue */
+  --color-white: #f3eee3; /* Seasalt */
+  --color-dark: #333333; /* Jet */
+  --color-beige: #bfae9c; /* Khaki */
+  --color-green: #a4d4ae; /* Celadon */
+
+  --color-primary: var(--color-blue);
+  --color-secondary: var(--color-beige);
+  --color-success: var(--color-green);
+}
+
+/* Reset and Base */
+body {
+  padding-top: 56px;
+  background-color: var(--color-white);
+  color: var(--color-dark);
+  font-family: 'Quicksand', sans-serif;
+}
+a,
+a:link,
+a:visited {
+  color: #333333;
+  text-decoration: none;
+}
+a:hover,
+a:focus {
+  color: var(--color-green);
+  text-decoration: underline;
+}
+
+/* Navbar */
+.navbar-dark {
+  background-color: var(--color-dark) !important;
+}
+.navbar-dark .navbar-brand,
+.navbar-dark .nav-link {
+  color: var(--color-white) !important;
+}
+
+/* Buttons */
+.btn {
+  font-family: Quicksand, sans-serif;
+  text-transform: uppercase;
+  /* Ensure no underline on buttons */
+  text-decoration: none !important;
+}
+
+.btn-center {
+  text-align: center;
+}
+
+.btn:hover .btn-slide-show-text1 {
+  margin-left: 65px;
+}
+
+.btn-rect-to-round {
+  height: 65px;
+  width: 200px;
+  font-size: 16px;
+  font-weight: 600;
+  background: transparent;
+  cursor: pointer;
+  transition: 0.5s ease-in;
+}
+
+.btn-rect-to-round:hover {
+  border-radius: 60px;
+  color: rgb(255, 255, 255) !important;
+}
+
+.btn-rect-to-round--black {
+  border: 2px solid rgb(191, 174, 156);
+  color: rgb(191, 174, 156) !important;
+}
+
+.btn-rect-to-round--black:hover {
+  border-color: rgb(191, 174, 156);
+  background: rgb(191, 174, 156);
+}
+
+/* Primary solid button */
+.btn-primary {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
+}
+.btn-primary:hover,
+.btn-primary:focus {
+  filter: brightness(1.1);
+  color: var(--color-white);
+}
+.btn-primary:hover,
+.btn-primary:focus {
+  filter: brightness(1.1);
+}
+
+/* Secondary solid button */
+.btn-secondary {
+  background-color: var(--color-secondary);
+  border-color: var(--color-secondary);
+  color: var(--color-white);
+}
+.btn-secondary:hover,
+.btn-secondary:focus {
+  filter: brightness(1.1);
+}
+
+/* Success solid button */
+.btn-success {
+  background-color: var(--color-success);
+  border-color: var(--color-success);
+}
+.btn-success:hover,
+.btn-success:focus {
+  filter: brightness(1.1);
+}
+
+/* Outline Buttons */
+.btn-outline-primary {
+  color: var(--color-primary);
+  background-color: transparent;
+  border: 1px solid var(--color-primary);
+  text-decoration: none;
+}
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+.btn-outline-secondary {
+  color: var(--color-secondary);
+  background-color: transparent;
+  border: 1px solid var(--color-secondary);
+  text-decoration: none;
+}
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+/* Card */
+.card {
+  border: 1px solid #e5e5e5;
+  font-family: 'Quicksand', sans-serif;
+}
+.card-header {
+  background-color: var(--color-blue);
+  color: var(--color-white);
+}
+
+/* Flash Messages */
+.message-container {
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  z-index: 1050;
+}
+.alert {
+  animation: fadeOut 1s 5s forwards;
+}
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+/* Forms */
+.form-label,
+.form-control,
+button,
+input,
+select,
+textarea {
+  font-family: 'Quicksand', sans-serif;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.navbar-brand,
+.logo,
+.testimonial,
+.blockquote,
+.blockquote-footer {
+  font-family: 'Caveat', cursive;
+}
+h1 {
+  font-weight: 700;
+}
+h2,
+h3 {
+  font-weight: 500;
+}
+.navbar-brand {
+  font-size: 1.75rem;
+}
+
+/* Booking form spacing */
+.booking-header {
+  margin-bottom: 30px;
+}
+.flatpickr-calendar {
+  font-size: 0.9rem;
+}
+
+/* Page-specific overrides */
+.hero-section {
+  background-color: var(--color-white) !important;
+}
+/* Ensure navbar links dark on hero */
+.hero-section .navbar-brand,
+.hero-section .nav-link {
+  color: var(--color-dark) !important;
+}
+/* Features section blue background */
+.features-section {
+  background-color: var(--color-primary) !important;
+}
+/* Feature cards lift on hover */
+.features-section .card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.features-section .card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Nav link bounce on hover */
+@keyframes nav-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.navbar-nav .nav-link:hover {
+  animation: nav-bounce 0.6s ease;
+  text-decoration: none !important;
+}
