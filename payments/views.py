@@ -106,6 +106,18 @@ def payment_success(request):
     booking = None
     if booking_id:
         booking = get_object_or_404(Booking, pk=booking_id, guest=request.user)
+
+        # 1) Mark the Payment record as succeeded
+        payment = getattr(booking, "payment", None)
+        if payment and payment.status != "succeeded":
+            payment.status = "succeeded"
+            payment.save()
+
+        # 2) Update the Booking status to confirmed
+        if booking.status != "confirmed":
+            booking.status = "confirmed"
+            booking.save()
+
     return render(request, "payments/success.html", {"booking": booking})
 
 
