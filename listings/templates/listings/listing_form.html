@@ -16,7 +16,6 @@
         <form method="post" enctype="multipart/form-data">
           {% csrf_token %}
           
-          {# Render each field with Bootstrap form-group spacing #}
           {% for field in form %}
             <div class="mb-3">
               {{ field.label_tag }}
