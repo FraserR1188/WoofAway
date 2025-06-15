@@ -1,12 +1,15 @@
+# reviews/views.py
+
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
+
 from .models import Review
 from listings.models import Listing
 from bookings.models import Booking
-from django.views.generic import ListView
+
 
 class ReviewCreateView(LoginRequiredMixin, CreateView):
     model = Review
@@ -15,12 +18,13 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
 
     def dispatch(self, request, *args, **kwargs):
         """
-        1. Ensure the listing exists.
+        1. Ensure the listing exists (using listing_pk from URL).
         2. Only allow guests who have a confirmed booking on this listing.
         3. Prevent hosts from reviewing their own listing.
         4. Prevent multiple reviews (unique_together).
         """
-        self.listing = get_object_or_404(Listing, pk=kwargs["listing_id"])
+        listing_pk = kwargs.get("listing_pk")
+        self.listing = get_object_or_404(Listing, pk=listing_pk)
 
         # 1. If the user is the listing’s host, block.
         if self.listing.host == request.user:
@@ -34,7 +38,10 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
             status="confirmed"
         ).exists()
         if not has_confirmed:
-            messages.error(request, "You must have a confirmed booking on this listing before you can review it.")
+            messages.error(
+                request,
+                "You must have a confirmed booking on this listing before you can review it."
+            )
             return redirect("listings:listing_detail", self.listing.pk)
 
         # 3. Prevent duplicates:
@@ -71,7 +78,10 @@ class ReviewUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return redirect("listings:listing_detail", self.get_object().listing.pk)
 
     def get_success_url(self):
-        return reverse_lazy("listings:listing_detail", args=[self.get_object().listing.pk])
+        return reverse_lazy(
+            "listings:listing_detail",
+            args=[self.get_object().listing.pk]
+        )
 
 
 class ReviewDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -87,7 +97,11 @@ class ReviewDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return redirect("listings:listing_detail", self.get_object().listing.pk)
 
     def get_success_url(self):
-        return reverse_lazy("listings:listing_detail", args=[self.get_object().listing.pk])
+        return reverse_lazy(
+            "listings:listing_detail",
+            args=[self.get_object().listing.pk]
+        )
+
 
 class MyReviewsView(LoginRequiredMixin, ListView):
     """
@@ -99,8 +113,8 @@ class MyReviewsView(LoginRequiredMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Review.objects.filter(guest=self.request.user).select_related("listing")
-    
+        return Review.objects.filter(self.request.user).select_related("listing")
+
 
 class ReviewListView(LoginRequiredMixin, ListView):
     model = Review
