@@ -46,8 +46,8 @@
               View Details
             </a>
 
-            {# only show “Edit” if the logged-in user owns this listing #}
-            {% if user.is_authenticated and listing.host == user %}
+            {# show “Edit” if user owns or is superuser #}
+            {% if user.is_authenticated and (listing.host == user or user.is_superuser) %}
               <a
                 href="{% url 'listings:listing_edit' listing.pk %}"
                 class="btn btn-outline-primary align-self-center mt-2"
