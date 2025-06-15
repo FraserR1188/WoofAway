@@ -1,19 +1,45 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-  <h1>
-    {% if view.action == "create" %}
-      Create a New Listing
-    {% else %}
-      Edit Listing: {{ listing.title }}
-    {% endif %}
-  </h1>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">
-      {% if view.action == "create" %}Create{% else %}Update{% endif %}
-    </button>
-  </form>
-  <a href="{% url 'listings:listing_list' %}">Cancel</a>
+  <div class="container py-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h3 class="card-title mb-4">
+          {% if view.action == "create" %}
+            Create a New Listing
+          {% else %}
+            Edit Listing: {{ listing.title }}
+          {% endif %}
+        </h3>
+
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          
+          {# Render each field with Bootstrap form-group spacing #}
+          {% for field in form %}
+            <div class="mb-3">
+              {{ field.label_tag }}
+              {{ field }}
+              {% if field.help_text %}
+                <div class="form-text">{{ field.help_text }}</div>
+              {% endif %}
+              {% for error in field.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+          {% endfor %}
+
+          <div class="d-flex">
+            <button type="submit" class="btn btn-primary">
+              {% if view.action == "create" %}Create{% else %}Update{% endif %}
+            </button>
+            <a href="{% url 'listings:listing_list' %}" class="btn btn-outline-secondary ms-3">
+              Cancel
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock %}
