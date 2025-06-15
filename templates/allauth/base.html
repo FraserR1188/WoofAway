@@ -20,6 +20,13 @@
         integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
         crossorigin="anonymous"
       />
+      <!-- Font Awesome for Social Icons -->
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-p18cO7y+5RIcqL8QGZ3X+c9/6S6tfxaV6npQTyAi5+s+06M1fitkRoOlWsmWEhgBsE1KoiSUU5VgZUgJkSV+Ww=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"
+      />
     {% endblock %}
 
     {% block extra_css %}
@@ -109,6 +116,13 @@
           <h3 class="fw-bold mb-3">Ready to get started?</h3>
           <p class="mb-4">Whether you’re a host looking to welcome furry guests or a dog owner seeking the perfect pet sitter—we’ve got you covered.</p>
           <a href="{% url 'account_signup' %}" class="btn btn-rect-to-round btn-rect-to-round--black btn-lg px-4">Join WoofAway Today</a>
+          <!-- Social Icons -->
+          <div class="mt-3">
+            <a href="https://facebook.com/woofaway" class="me-3 text-dark"><i class="fab fa-facebook fa-2x"></i></a>
+            <a href="https://twitter.com/woofaway" class="me-3 text-dark"><i class="fab fa-twitter fa-2x"></i></a>
+            <a href="https://instagram.com/woofaway" class="me-3 text-dark"><i class="fab fa-instagram fa-2x"></i></a>
+            <a href="https://linkedin.com/company/woofaway" class="text-dark"><i class="fab fa-linkedin fa-2x"></i></a>
+          </div>
         </div>
       </section>
     </footer>
