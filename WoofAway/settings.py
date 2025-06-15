@@ -33,7 +33,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'woofaway-67c26fd9ee06.herokuapp.com'
+    'woofaway-67c26fd9ee06.herokuapp.com',
+    '127.0.0.1',
+    'localhost',
 ]
 
 

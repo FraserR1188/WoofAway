@@ -1,12 +1,45 @@
-{% extends "account/base.html" %}
-
+{% extends "base.html" %}
 {% load i18n %}
 
-{% block head_title %}{% trans "Verify Your E-mail Address" %}{% endblock %}
+{% block extra_title %}Email Verification Sent{% endblock %}
+
+{% block page_header %}
+<section class="bg-light py-4 mb-4">
+  <div class="container text-center">
+    <h1 class="display-5">Check Your Inbox</h1>
+    <p class="lead text-muted">
+      We’ve just sent an email to confirm your address.
+      Please click the link in that message to complete your registration.
+    </p>
+  </div>
+</section>
+{% endblock %}
 
 {% block content %}
-    <h1>{% trans "Verify Your E-mail Address" %}</h1>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
 
-    <p>{% blocktrans %}We have sent an e-mail to you for verification. Follow the link provided to finalize the signup process. If you do not see the verification e-mail in your main inbox, check your spam folder. Please contact us if you do not receive the verification e-mail within a few minutes.{% endblocktrans %}</p>
+      <div class="alert alert-info shadow-sm" role="alert">
+        <h4 class="alert-heading">{% trans "Verification Email Sent" %}</h4>
+        <p>
+          {% blocktrans %}
+          A verification email has been sent to <strong>{{ email }}</strong>.
+          If it doesn't arrive within a few minutes, please check your spam folder.
+          {% endblocktrans %}
+        </p>
+      </div>
 
+      <div class="text-center mt-4">
+        <a href="{% url 'account_login' %}" class="btn btn-secondary btn-lg px-4 me-2">
+          {% trans "Back to Login" %}
+        </a>
+        <a href="{% url 'home:index' %}" class="btn btn-primary btn-lg px-4">
+          {% trans "Return Home" %}
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
 {% endblock %}
