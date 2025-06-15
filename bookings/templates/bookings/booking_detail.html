@@ -32,7 +32,10 @@
 
         <dt class="col-sm-3">Status:</dt>
         <dd class="col-sm-9">
-          {% if booking.status == "pending" %}
+          {# Treat succeeded payment as confirmed booking #}
+          {% if booking.payment and booking.payment.status == "succeeded" %}
+            <span class="badge bg-success">Confirmed</span>
+          {% elif booking.status == "pending" %}
             <span class="badge bg-warning text-dark">Pending</span>
           {% elif booking.status == "confirmed" %}
             <span class="badge bg-success">Confirmed</span>
@@ -67,7 +70,7 @@
           <dd class="col-sm-9">{{ booking.payment.timestamp|date:"M d, Y H:i" }}</dd>
         </dl>
 
-        {# If there’s a pending payment, let them complete it #}
+        {# Only show a CTA if the payment itself is still pending #}
         {% if booking.payment.status == "pending" %}
           <div class="text-center mb-4">
             <a
@@ -80,7 +83,7 @@
         {% endif %}
 
       {% else %}
-        {# No payment record yet, but booking is pending #}
+        {# No payment yet & booking is still pending => allow checkout #}
         {% if booking.status == "pending" %}
           <div class="text-center mb-4">
             <a
