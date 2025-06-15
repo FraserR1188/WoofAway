@@ -1,3 +1,4 @@
+{# bookings/templates/bookings/booking_detail.html #}
 {% extends "base.html" %}
 {% load static %}
 
@@ -35,7 +36,7 @@
             <span class="badge bg-warning text-dark">Pending</span>
           {% elif booking.status == "confirmed" %}
             <span class="badge bg-success">Confirmed</span>
-          {% elif booking.status == "cancelled" %}
+          {% else %}
             <span class="badge bg-danger">Cancelled</span>
           {% endif %}
         </dd>
@@ -65,7 +66,21 @@
           <dt class="col-sm-3">Timestamp:</dt>
           <dd class="col-sm-9">{{ booking.payment.timestamp|date:"M d, Y H:i" }}</dd>
         </dl>
+
+        {# If there’s a pending payment, let them complete it #}
+        {% if booking.payment.status == "pending" %}
+          <div class="text-center mb-4">
+            <a
+              href="{% url 'payments:detail' booking.pk %}"
+              class="btn btn-lg btn-primary px-5"
+            >
+              Complete Payment
+            </a>
+          </div>
+        {% endif %}
+
       {% else %}
+        {# No payment record yet, but booking is pending #}
         {% if booking.status == "pending" %}
           <div class="text-center mb-4">
             <a
@@ -78,6 +93,7 @@
         {% endif %}
       {% endif %}
 
+      {# ===== Footer Actions ===== #}
       <div class="d-flex justify-content-between">
         <a href="{% url 'bookings:booking_list' %}" class="btn btn-outline-secondary">
           Back to My Bookings
