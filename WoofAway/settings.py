@@ -207,11 +207,13 @@ if os.environ.get('USE_AWS'):
     # tell django-storages where to put static vs media
     STATICFILES_LOCATION = "static"
     MEDIAFILES_LOCATION = "media"
+    STORAGES = {
+        "default": {
+            "BACKEND": "custom_storages.MediaStorage",
+        },
+        "staticfiles": {"BACKEND": "custom_storages.StaticStorage"},
+    }
 
     # URLs that browsers will use
     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/"
     MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/"
-
-    # Use your custom backends (must live in WoofAway/custom_storages.py)
-    STATICFILES_STORAGE = "WoofAway.custom_storages.StaticStorage"
-    DEFAULT_FILE_STORAGE = "WoofAway.custom_storages.MediaStorage"
