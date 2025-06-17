@@ -161,4 +161,46 @@ Desktop Wireframe
 
 ![Login Page](docs/README/login.png)
 
+## User Password Reset/Forgotten Password
+
+- If the user has forgotten their password as warning will pop up.
+
+![User Incorrect Poassword](docs/README/login-incorrect-password.png)
+
+- User clicks on forgotten password, they then have to put their email in.
+
+![User Reset](docs/README/user-reset-password.png)
+
+- The user should then checked their email.
+
+![User Check Mail](docs/README/user-check-mail.png)
+
+- THIS NEEDS MOREEOEOEOEOEO
+
 ## Profile
+
+![Profile Before](docs/README/profile-before.png)
+
+- This is what the profile looks like before the user edits it.
+
+![Profile Edit](docs/README/profile-edit.png)
+
+- These are the fields which need to be filled in. When the user ticks being a host this enables them to create a listing. Otherwise, they will not have that option.
+
+![Profile Edit Filled](docs/README/profile-edit-filled.png)
+
+- This is an exmaple of the profile edit vore being filled.
+
+![Profile Result](docs/README/profile-result.png)
+
+- This shows an image of the user also the Host? showing green. If they were not a host then it would be grey and saying no.
+
+## Listings
+
+- This is the listings landing page. Since this user is a host the green button "CREATE NEW LISTING" is showing.
+
+![Listing List](docs/README/listing-specific.png)
+
+- This is the page with the listing detail.
+
+![Listing Detail](docs/README/listing.png)
