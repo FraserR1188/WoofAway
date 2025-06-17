@@ -21,6 +21,14 @@
     <p><strong>Price per night:</strong> £{{ listing.price_per_night }}</p>
     <p>{{ listing.description }}</p>
 
+    {# === Hosted By === #}
+    <div class="mb-4">
+      <strong>Hosted by:</strong>
+      <a href="{% url 'accounts:profile_detail' listing.host.profile.pk %}">
+        {{ listing.host.username }}
+      </a>
+    </div>
+
     <div class="mt-4">
       {# only show “Edit” to the logged-in host #}
       {% if user.is_authenticated and listing.host == user %}
@@ -28,7 +36,7 @@
           Edit this listing
         </a>
       {% endif %}
-      <a href="{% url 'listings:listing_list' %}" id="black-button-writing" class="btn btn-outline-primary">
+      <a href="{% url 'listings:listing_list' %}" class="btn btn-outline-primary">
         Back to all listings
       </a>
     </div>

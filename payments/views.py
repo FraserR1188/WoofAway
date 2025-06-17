@@ -17,7 +17,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 class PaymentDetailView(LoginRequiredMixin, FormView):
     template_name = "payments/payment_detail.html"
-    form_class    = PaymentDetailForm
+    form_class = PaymentDetailForm
 
     def dispatch(self, request, *args, **kwargs):
         # load booking and ensure only the guest can access
@@ -35,14 +35,14 @@ class PaymentDetailView(LoginRequiredMixin, FormView):
     def get_initial(self):
         return {
             "street_address": self.payment.street_address,
-            "city":           self.payment.city,
-            "postcode":       self.payment.postcode,
-            "country":        self.payment.country,
+            "city": self.payment.city,
+            "postcode": self.payment.postcode,
+            "country": self.payment.country,
         }
 
     def get_context_data(self, **ctx):
         ctx = super().get_context_data(**ctx)
-        ctx["booking"]           = self.booking
+        ctx["booking"] = self.booking
         ctx["stripe_public_key"] = settings.STRIPE_PUBLISHABLE_KEY
 
         # Create or retrieve a Stripe PaymentIntent
@@ -95,7 +95,7 @@ class StripeCheckoutView(LoginRequiredMixin, View):
             }],
             mode="payment",
             success_url=settings.STRIPE_SUCCESS_URL + f"?booking_id={booking.pk}",
-            cancel_url= settings.STRIPE_CANCEL_URL + f"?booking_id={booking.pk}",
+            cancel_url=settings.STRIPE_CANCEL_URL + f"?booking_id={booking.pk}",
             customer_email=request.user.email,
             billing_address_collection="required",
             metadata={"booking_id": booking.pk},
