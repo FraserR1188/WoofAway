@@ -91,3 +91,47 @@ Tablet Wireframe
 Desktop Wireframe
 
 ![Desktop Wireframe](docs/README/Wireframes/Desktop%20View.png)
+
+# Features
+
+## Home Page
+
+### Navigation Bar
+
+![Navigation Bar Normal](docs/README/nav-bar-not-logged-in.png)
+
+- This is what the navigation bar looks like when no one is logged in.
+
+![Navigation Bar logged in as normal user](docs/README/nav-bar-logged-in-normal.png)
+
+- This is the nav bar when a user is logged in.
+
+![Navigation Bar user dropdown](docs/README/nav-bar-logged-in-dropdown.png)
+
+- This the nav bar when the host or a normal user uses the dropdown menu to select their profile of bookings.
+
+![Navigation Bar mobile](docs/README/nav-bar-mobile.png)
+
+![Navigation Bar mobile dropdown](docs/README/nav-bar-mobile-user-options.png)
+
+- This is the nav bar in a mobile view one when nothing is selected and the other when the burger menu has been touch.
+
+![Navigation Bar mobile host](docs/README/nav-bar-mobile-host.png)
+
+- This is the host view on the mobile view.
+
+![Hero image home page](docs/README/hero-image-main-page.png)
+
+- This is the hero image on the home page.
+
+![Home page buttons](docs/README/homepage-buttons.png)
+
+- These are home page buttons which take the user to the listings page or if they have an account/host then they can create a listing. The BROWSE LISTING button has been highlighted to show the animation effect.
+
+![Main sections on home page](docs/README/section-with-main-headings.png)
+
+- These are the main section headings on the home page which give good reason to choose this service. All links take the user to the section of the website intended.
+
+![Footer](docs/README/footer.png)
+
+- This is the footer which is present throughout the website. It contains a button which take the user to sign-up page if not already signed up. there also Font Awesome icons taking the user to the correct social media outlets.
