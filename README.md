@@ -135,3 +135,30 @@ Desktop Wireframe
 ![Footer](docs/README/footer.png)
 
 - This is the footer which is present throughout the website. It contains a button which take the user to sign-up page if not already signed up. there also Font Awesome icons taking the user to the correct social media outlets.
+
+## Sign Up Page
+
+- I've test data in the screenshot to show how it looks.
+
+![Test Login](docs/README/test-sign-up.png)
+
+- This is the process how someone would sign up to the website.
+- After the user has input the information, they then recieve an email into the inbox.
+
+![Test Verification](docs/README/sign-up-verification.png)
+
+- The email in the users inbox should look something like this.
+
+![Test Inbox](docs/README/sign-up-inbox.png)
+
+- Once the user has clicked on the link it should transport them back to the site to confirm.
+
+![Test Confirm](docs/README/sign-up-confirm.png)
+
+- Once confirmed, the user is then taken the login page to them start exploring the site with a user account.
+
+## Login Page
+
+![Login Page](docs/README/login.png)
+
+## Profile
