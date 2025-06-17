@@ -1,5 +1,6 @@
 from django.http import Http404
 from django.urls import reverse_lazy
+from django.shortcuts import redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import DeleteView
@@ -59,13 +60,18 @@ class ListingDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     template_name = "listings/listing_confirm_delete.html"
     success_url = reverse_lazy("listings:listing_list")
 
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            return super().dispatch(request, *args, **kwargs)
+        except Http404:
+            # Already deleted (or never existed) → just go back to list
+            return redirect(self.success_url)
+
     def test_func(self):
-        # only the owner or a superuser can delete
         listing = self.get_object()
         return self.request.user == listing.host or self.request.user.is_superuser
 
     def handle_no_permission(self):
         from django.contrib import messages
-        from django.shortcuts import redirect
         messages.error(self.request, "You do not have permission to delete that listing.")
-        return redirect("listings:listing_list")
+        return redirect(self.success_url)
