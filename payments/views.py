@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.generic import FormView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
 from bookings.models import Booking
 from .models import Payment
@@ -19,9 +20,15 @@ class PaymentDetailView(LoginRequiredMixin, FormView):
     form_class    = PaymentDetailForm
 
     def dispatch(self, request, *args, **kwargs):
+        # load booking and ensure only the guest can access
         self.booking = get_object_or_404(
-            Booking, pk=kwargs["booking_pk"], guest=request.user
+            Booking, pk=kwargs["booking_pk"]
         )
+        if request.user != self.booking.guest:
+            messages.error(request, "Please contact the guest to pay for this booking.")
+            return redirect("bookings:booking_detail", self.booking.pk)
+
+        # get or create Payment record for this booking
         self.payment, _ = Payment.objects.get_or_create(booking=self.booking)
         return super().dispatch(request, *args, **kwargs)
 
@@ -38,7 +45,7 @@ class PaymentDetailView(LoginRequiredMixin, FormView):
         ctx["booking"]           = self.booking
         ctx["stripe_public_key"] = settings.STRIPE_PUBLISHABLE_KEY
 
-        # ─── Create or retrieve a PaymentIntent ───────────────────────────────
+        # Create or retrieve a Stripe PaymentIntent
         amount_pence = int(self.booking.total_price * 100)
         if not self.payment.stripe_payment_intent:
             intent = stripe.PaymentIntent.create(
@@ -57,18 +64,18 @@ class PaymentDetailView(LoginRequiredMixin, FormView):
         return ctx
 
     def form_valid(self, form):
-        # save billing address
+        # save billing address fields
         for f, v in form.cleaned_data.items():
             setattr(self.payment, f, v)
         self.payment.save()
 
-        # stay on page so client JS can run confirmCardPayment()
+        # stay on payment page so client JS can confirm payment
         return render(self.request, self.template_name, self.get_context_data())
 
 
 class StripeCheckoutView(LoginRequiredMixin, View):
     """
-    Spins up a Stripe Checkout Session and 303-redirects to Stripe’s page.
+    Spins up a Stripe Checkout Session and redirects there.
     """
     def get(self, request, booking_pk):
         booking = get_object_or_404(
@@ -81,9 +88,7 @@ class StripeCheckoutView(LoginRequiredMixin, View):
             line_items=[{
                 "price_data": {
                     "currency": "gbp",
-                    "product_data": {
-                        "name": f"Booking #{booking.pk}: {booking.listing.title}",
-                    },
+                    "product_data": {"name": f"Booking #{booking.pk}: {booking.listing.title}"},
                     "unit_amount": int(booking.total_price * 100),
                 },
                 "quantity": 1,
@@ -107,13 +112,13 @@ def payment_success(request):
     if booking_id:
         booking = get_object_or_404(Booking, pk=booking_id, guest=request.user)
 
-        # 1) Mark the Payment record as succeeded
+        # mark payment succeeded
         payment = getattr(booking, "payment", None)
         if payment and payment.status != "succeeded":
             payment.status = "succeeded"
             payment.save()
 
-        # 2) Update the Booking status to confirmed
+        # confirm the booking
         if booking.status != "confirmed":
             booking.status = "confirmed"
             booking.save()
