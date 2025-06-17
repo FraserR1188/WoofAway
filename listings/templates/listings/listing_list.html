@@ -47,28 +47,39 @@
             </a>
 
             {# show “Edit” and “Delete” if user owns or is superuser #}
-            {% if user.is_authenticated %}
-              {% if listing.host == user or user.is_superuser %}
-                <div class="d-flex justify-content-center mt-2 gap-2">
-                  <a
-                    href="{% url 'listings:listing_edit' listing.pk %}"
-                    class="btn btn-outline-primary"
-                  >
-                    Edit
-                  </a>
-                  <form
-                    action="{% url 'listings:listing_delete' listing.pk %}"
-                    method="post"
-                    class="m-0"
-                    onsubmit="return confirm('Are you sure you want to delete this listing?');"
-                  >
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-outline-danger">
-                      Delete
-                    </button>
-                  </form>
+            {% if user.is_authenticated and (listing.host == user or user.is_superuser) %}
+              <div class="d-flex justify-content-center mt-2 gap-2">
+                <a
+                  href="{% url 'listings:listing_edit' listing.pk %}"
+                  class="btn btn-outline-primary"
+                >Edit</a>
+                <!-- Delete Trigger -->
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ listing.pk }}">
+                  Delete
+                </button>
+              </div>
+
+              <!-- Delete Confirmation Modal -->
+              <div class="modal fade" id="deleteModal{{ listing.pk }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ listing.pk }}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="deleteModalLabel{{ listing.pk }}">Confirm Deletion</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Are you sure you want to delete "{{ listing.title }}"? This action cannot be undone.
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                      <form action="{% url 'listings:listing_delete' listing.pk %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                      </form>
+                    </div>
+                  </div>
                 </div>
-              {% endif %}
+              </div>
             {% endif %}
           </div>
         </div>
