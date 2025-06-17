@@ -1,4 +1,3 @@
-# listings/urls.py
 from django.urls import path
 from . import views
 
@@ -9,4 +8,5 @@ urlpatterns = [
     path("create/", views.ListingCreateView.as_view(), name="listing_create"),
     path("<int:pk>/", views.ListingDetailView.as_view(), name="listing_detail"),
     path("<int:pk>/edit/", views.ListingUpdateView.as_view(), name="listing_edit"),
+    path("<int:pk>/delete/", views.ListingDeleteView.as_view(), name="listing_delete"),
 ]

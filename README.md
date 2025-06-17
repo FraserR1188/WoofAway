@@ -64,6 +64,8 @@ I want the design of the website to super easy to read and navigate. Simplistic 
 
 ### Colour
 
+![Colour Scheme](docs/README/Colour%20palette.png)
+
 ### Typography
 
 The fonts which I have picked are the playful Caveat for headings, logos and testimonials and the modern Quicksand font for body text, nav and buttons. Caveat adds a more personal feel and friendly feel and Quicksand is clear and easliy read.
@@ -71,3 +73,21 @@ The fonts which I have picked are the playful Caveat for headings, logos and tes
 ### Imagery
 
 The images which will be present on the website will be the logo for WoofAway and the pictures of the houses on the listings. The host will be able to upload them. A profile picture of the host can aslo be uploaded but not necessary.
+
+### Icons
+
+I used the Font Awesome icons for the social links which are present throughout the website in the footer.
+
+### Wireframes
+
+Mobile Wireframe
+
+![Mobile Wireframe](docs/README/Wireframes/Mobile%20View.png)
+
+Tablet Wireframe
+
+![Tablet Wireframe](docs/README/Wireframes/iPad%20View.png)
+
+Desktop Wireframe
+
+![Desktop Wireframe](docs/README/Wireframes/Desktop%20View.png)
