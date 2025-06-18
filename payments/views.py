@@ -1,6 +1,7 @@
 # payments/views.py
 
 import stripe
+from django.core.mail import send_mail
 from django.conf import settings
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -107,6 +108,12 @@ class StripeCheckoutView(LoginRequiredMixin, View):
 
 
 def payment_success(request):
+    """
+    Handle successful payments:
+     - mark booking confirmed
+     - send confirmation e-mails to both guest and host
+     - render the success page
+    """
     booking_id = request.GET.get("booking_id")
     booking = None
     if booking_id:
@@ -122,6 +129,36 @@ def payment_success(request):
         if booking.status != "confirmed":
             booking.status = "confirmed"
             booking.save()
+
+        # build subject & message
+        subject = f"Your WoofAway booking #{booking.pk} is confirmed"
+        detail_url = request.build_absolute_uri(
+            reverse("bookings:booking_detail", args=[booking.pk])
+        )
+        message = (
+            f"Booking Confirmation\n\n"
+            f"Booking #: {booking.pk}\n"
+            f"Listing: {booking.listing.title}\n"
+            f"Location: {booking.listing.location}\n"
+            f"Check-in: {booking.check_in}\n"
+            f"Check-out: {booking.check_out}\n"
+        )
+        if hasattr(booking, "num_dogs"):
+            message += f"Number of Dogs: {booking.num_dogs}\n"
+        message += (
+            f"Total Price: £{booking.total_price}\n\n"
+            f"Host: {booking.listing.host.username} ({booking.listing.host.email})\n"
+            f"View your booking: {detail_url}\n"
+        )
+
+        # send to guest and host
+        send_mail(
+            subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [booking.guest.email, booking.listing.host.email],
+            fail_silently=False,
+        )
 
     return render(request, "payments/success.html", {"booking": booking})
 
