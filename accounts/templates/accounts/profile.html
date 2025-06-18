@@ -1,10 +1,9 @@
-{# accounts/templates/accounts/profile.html #}
 {% extends "base.html" %}
 {% load static %}
 
 {% block content %}
 <div class="container py-4" style="margin-top: 80px;">
-  <h1>{{ request.user.username }}’s Profile</h1>
+  <h1>{{ profile.user.username }}’s Profile</h1>
   <hr>
 
   <div class="row">
@@ -29,7 +28,7 @@
     <div class="col-md-9">
       <dl class="row">
         <dt class="col-sm-3">Email:</dt>
-        <dd class="col-sm-9">{{ request.user.email }}</dd>
+        <dd class="col-sm-9">{{ profile.user.email }}</dd>
 
         <dt class="col-sm-3">Host?</dt>
         <dd class="col-sm-9">
@@ -46,7 +45,7 @@
         <dt class="col-sm-3">Accessibility Needs:</dt>
         <dd class="col-sm-9">{{ profile.accessibility_needs|linebreaksbr }}</dd>
 
-        {# ==== New Address Section ==== #}
+        <!-- Address fields -->
         <dt class="col-sm-3">Street Address:</dt>
         <dd class="col-sm-9">{{ profile.street_address }}</dd>
 
@@ -60,7 +59,9 @@
         <dd class="col-sm-9">{{ profile.country }}</dd>
       </dl>
 
-      <a href="{% url 'accounts:edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+      {% if request.user == profile.user %}
+        <a href="{% url 'accounts:edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+      {% endif %}
     </div>
   </div>
 </div>
