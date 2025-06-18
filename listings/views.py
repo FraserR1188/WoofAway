@@ -1,10 +1,13 @@
 from django.http import Http404
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import (
+    ListView, DetailView, CreateView, UpdateView, DeleteView
+)
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import DeleteView
+
 from .models import Listing
+from .forms import ListingForm
 
 
 class ListingListView(ListView):
@@ -22,29 +25,28 @@ class ListingDetailView(DetailView):
 
 class ListingCreateView(LoginRequiredMixin, CreateView):
     model = Listing
+    form_class = ListingForm
     template_name = "listings/listing_form.html"
-    fields = [
-        "category", "title", "description", "location",
-        "price_per_night", "is_accessible", "dog_policy", "image"
-    ]
     success_url = reverse_lazy("listings:listing_list")
+    action = "create"
 
     def form_valid(self, form):
         # automatically set the host to the current user
         form.instance.host = self.request.user
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["view"] = self
+        return ctx
 
-class ListingUpdateView(LoginRequiredMixin,
-                        UserPassesTestMixin,
-                        UpdateView):
+
+class ListingUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Listing
+    form_class = ListingForm
     template_name = "listings/listing_form.html"
-    fields = [
-        "category", "title", "description", "location",
-        "price_per_night", "is_accessible", "dog_policy", "image"
-    ]
     success_url = reverse_lazy("listings:listing_list")
+    action = "edit"
 
     def test_func(self):
         # only allow the owner to edit
@@ -53,6 +55,12 @@ class ListingUpdateView(LoginRequiredMixin,
     def handle_no_permission(self):
         # optional: return 404 rather than redirect to login
         raise Http404("You do not have permission to edit this listing.")
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["view"] = self
+        ctx["listing"] = self.get_object()
+        return ctx
 
 
 class ListingDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
