@@ -1,12 +1,13 @@
-# messaging/views.py
-
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib import messages
+
 from .models import Conversation, Message
 from listings.models import Listing
+from bookings.models import Booking  # import Booking for context
+
 
 class InboxView(LoginRequiredMixin, ListView):
     """
@@ -29,6 +30,17 @@ class ConversationDetailView(LoginRequiredMixin, DetailView):
     template_name = "messaging/conversation_detail.html"
     context_object_name = "conversation"
 
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        convo = self.get_object()
+        # retrieve the most recent booking between these participants and listing
+        booking = Booking.objects.filter(
+            listing=convo.listing,
+            guest=self.request.user
+        ).order_by('-created_at').first()
+        ctx['booking'] = booking
+        return ctx
+
     def post(self, request, *args, **kwargs):
         convo = self.get_object()
         if request.user not in convo.participants.all():
@@ -46,7 +58,7 @@ class ConversationDetailView(LoginRequiredMixin, DetailView):
 
 class CreateConversationView(LoginRequiredMixin, View):
     """
-    When a guest clicks “Message Host” on a listing detail,
+    When a guest clicks “Message Host” on a booking detail,
     this view creates or retrieves the one conversation between guest + host + listing.
     """
     def get(self, request, listing_id, *args, **kwargs):
