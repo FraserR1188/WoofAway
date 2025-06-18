@@ -24,6 +24,21 @@
     {# ← NEW: show host-defined max dogs #}
     <p><strong>Maximum dogs allowed:</strong> {{ listing.max_dogs }}</p>
 
+    {# ← NEW: show dog policy #}
+    {% if listing.dog_policy %}
+      <p><strong>Dog Policy:</strong> {{ listing.dog_policy }}</p>
+    {% endif %}
+
+    {# ← NEW: show accessibility #}
+    <p>
+      <strong>Accessible?</strong>
+      {% if listing.is_accessible %}
+        <span class="text-success">Yes</span>
+      {% else %}
+        <span class="text-muted">No</span>
+      {% endif %}
+    </p>
+
     {# === Hosted By === #}
     <div class="mb-4">
       <strong>Hosted by:</strong>
