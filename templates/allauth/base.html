@@ -68,6 +68,7 @@
                     {{ user.username }}
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="{% url 'messaging:inbox' %}">Inbox</a></li>
                     <li><a class="dropdown-item" href="{% url 'accounts:view_profile' %}">Profile</a></li>
                     <li><a class="dropdown-item" href="{% url 'accounts:edit_profile' %}">Edit Profile</a></li>
                     <li><a class="dropdown-item" href="{% url 'bookings:booking_list' %}">My Bookings</a></li>
