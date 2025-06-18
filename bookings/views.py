@@ -12,6 +12,7 @@ from .models import Booking
 from listings.models import Listing
 from .forms import BookingForm
 
+
 class BookingListView(LoginRequiredMixin, ListView):
     model = Booking
     template_name = "bookings/booking_list.html"
@@ -51,10 +52,18 @@ class BookingCreateView(LoginRequiredMixin, CreateView):
     template_name = "bookings/booking_form.html"
 
     def dispatch(self, request, *args, **kwargs):
+        # grab the listing so we can pass it to the form
         self.listing = get_object_or_404(Listing, pk=kwargs["listing_id"])
         return super().dispatch(request, *args, **kwargs)
 
+    def get_form_kwargs(self):
+        kw = super().get_form_kwargs()
+        # tell the form which listing to build the num_dogs choices for
+        kw["listing"] = self.listing
+        return kw
+
     def form_valid(self, form):
+        # form.save(...) now handles guest, listing, num_dogs, total_price
         booking = form.save(user=self.request.user, listing=self.listing)
         return redirect(booking.get_absolute_url())
 
@@ -64,19 +73,34 @@ class BookingUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     form_class = BookingForm
     template_name = "bookings/booking_form.html"
 
-    def get_initial(self):
-        initial = super().get_initial()
-        booking = self.get_object()
-        initial["date_range"] = f"{booking.check_in} to {booking.check_out}"
-        return initial
-
     def test_func(self):
         booking = self.get_object()
+        # only allow editing while still pending
         return booking.guest == self.request.user and booking.status == "pending"
 
     def handle_no_permission(self):
         messages.error(self.request, "You cannot edit this booking.")
         return redirect("bookings:booking_list")
+
+    def get_initial(self):
+        initial = super().get_initial()
+        booking = self.get_object()
+        initial["date_range"] = f"{booking.check_in} to {booking.check_out}"
+        initial["num_dogs"] = booking.num_dogs
+        return initial
+
+    def get_form_kwargs(self):
+        kw = super().get_form_kwargs()
+        booking = self.get_object()
+        # pass the listing so the dropdown is correct
+        kw["listing"] = booking.listing
+        return kw
+
+    def form_valid(self, form):
+        booking = self.get_object()
+        # re-save via form.save to recalc price & num_dogs
+        updated = form.save(user=self.request.user, listing=booking.listing)
+        return redirect(updated.get_absolute_url())
 
 
 class BookingCancelView(LoginRequiredMixin, UserPassesTestMixin, View):

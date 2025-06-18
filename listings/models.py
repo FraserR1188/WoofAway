@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from storages.backends.s3boto3 import S3Boto3Storage
+from django.core.validators import MinValueValidator
 
 s3 = S3Boto3Storage()
 
@@ -23,6 +24,11 @@ class Listing(models.Model):
     price_per_night = models.PositiveIntegerField()
     is_accessible = models.BooleanField(default=False)
     dog_policy = models.TextField(blank=True)
+    max_dogs = models.PositiveIntegerField(
+        default=1,
+        validators=[MinValueValidator(1)],
+        help_text="Maximum number of dogs allowed"
+    )
     image = models.ImageField(
         storage=s3,
         upload_to="listings/",

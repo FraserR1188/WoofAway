@@ -1,4 +1,3 @@
-{# bookings/templates/bookings/booking_form.html #}
 {% extends "base.html" %}
 {% load static %}
 {% load crispy_forms_tags %}
@@ -38,7 +37,13 @@
       {{ form.check_in }}   {# HiddenInput #}
       {{ form.check_out }}  {# HiddenInput #}
 
-      
+      {# Number of Dogs field #}
+      <div class="col-12">
+        <label for="id_num_dogs" class="form-label">Number of Dogs</label>
+        {{ form.num_dogs }}
+        {{ form.num_dogs.errors }}
+      </div>
+
       <div class="col-12">
         <button type="submit" class="btn btn-primary">
           {% if object %}Save Changes{% else %}Reserve Now{% endif %}
@@ -57,25 +62,14 @@
     document.addEventListener("DOMContentLoaded", function () {
       flatpickr("#id_date_range", {
         mode: "range",
-
-        // The value flatpickr sets into the input(s) (hidden fields) will be ISO:
         dateFormat: "Y-m-d",
-
-        // Use altInput so the user sees a prettier D-M-Y format
         altInput: true,
-        altFormat: "d-m-Y",   // displayed format = day-month-year
-
-        // Prevent past dates:
+        altFormat: "d-m-Y",
         minDate: "today",
-
         onClose: function (selectedDates, dateStr, instance) {
-          // selectedDates is an array of 0, 1, or 2 JS Date objects:
           if (selectedDates.length === 2) {
-            // Convert each to YYYY-MM-DD:
             const startISO = selectedDates[0].toISOString().split("T")[0];
             const endISO   = selectedDates[1].toISOString().split("T")[0];
-
-            // Set the hidden fields:
             document.getElementById("id_check_in").value = startISO;
             document.getElementById("id_check_out").value = endISO;
           }

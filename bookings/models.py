@@ -31,6 +31,8 @@ class Booking(models.Model):
         default="pending",
     )
     total_price = models.PositiveIntegerField(blank=True, null=True)
+    num_dogs = models.PositiveIntegerField(default=1)
+    total_price = models.PositiveIntegerField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
