@@ -15,19 +15,31 @@
       <p class="lead mb-4">
         Discover pet-friendly stays, trusted hosts, and worry-free dogboarding experiences.
       </p>
+
+      <!-- Primary CTAs -->
       <a
         href="{% url 'listings:listing_list' %}"
         class="btn btn-rect-to-round btn-rect-to-round--black btn-lg px-4 me-2"
       >
         Browse Listings
       </a>
-      {% if user.is_authenticated and user.profile.is_host %}
-        <a
-          href="{% url 'listings:listing_create' %}"
-          class="btn btn-rect-to-round btn-rect-to-round--black btn-lg px-4"
-        >
-          Create a Listing
-        </a>
+
+      {% if user.is_authenticated %}
+        {% if user.profile.is_host %}
+          <a
+            href="{% url 'listings:listing_create' %}"
+            class="btn btn-rect-to-round btn-rect-to-round--black btn-lg px-4"
+          >
+            Create a Listing
+          </a>
+        {% else %}
+          <a
+            href="{% url 'accounts:view_profile' %}"
+            class="btn btn-rect-to-round btn-rect-to-round--black btn-lg px-4"
+          >
+            Become a Host
+          </a>
+        {% endif %}
       {% else %}
         <a
           href="{% url 'account_signup' %}"
