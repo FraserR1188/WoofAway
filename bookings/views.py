@@ -67,6 +67,11 @@ class BookingCreateView(LoginRequiredMixin, CreateView):
         booking = form.save(user=self.request.user, listing=self.listing)
         return redirect(booking.get_absolute_url())
 
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['listing'] = self.listing
+        return ctx
+
 
 class BookingUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Booking
