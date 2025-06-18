@@ -38,6 +38,12 @@
             </a>
           </div>
         </form>
+        <pre>
+          Form fields detected:
+          {% for bf in form %}
+            - {{ bf.name }}
+          {% endfor %}
+        </pre>
       </div>
     </div>
   </div>
