@@ -236,3 +236,23 @@ Desktop Wireframe
 ![Host Dashboard](docs/README/host-dasboard.png)
 
 - It give the host complete control over their bookings. The host can carry out the following actions if they desire. The confirm button will confirm the booking but not pay for it as only the guest can do this. The may needed on a special requirement basis e.g. family staying...
+
+![Host Confirm](docs/README/host-confirm.png)
+
+- This modal will confirm the booking but not pay for it.
+
+![Host Cancel](docs/README/host-cancel.png)
+
+- This modal will cancel the booking.
+
+### Booking/Payment Flow
+
+- This will be example of the booking/payment flow.
+
+![Book Button](docs/README/book-button.png)
+
+- This button, which is located underneath any reviews which may be present on the listing, will initiate the booking process.
+
+![Booking Reserve](docs/README/booking-reserve.png)
+
+- The
