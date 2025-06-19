@@ -2,6 +2,28 @@
 
 WoofAway website has been tested using the following methods:
 
+- [Code Validation](#code-validation)
+  - [W3C HTML Validator](#w3c-html-validator)
+  - [W3C CSS Validator](#w3c-css-validator)
+  - [JSHint Validator](#jshint)
+- [Accessibility](#accessibility)
+  - [WAVE Webaim Accessibility Checker](#wave-webaim-accessibility-checker)
+- [Google Lighthouse](#google-lighthouse)
+  - [Home Page](#home-page)
+  - [About Page](#about-page)
+  - [Listing Page](#listing-page)
+  - [Listing Detail Page](#listing-detail-page)
+- [Browser Compatibility](#browser-compatibility)
+  - [Responsiveness](#responsivenss)
+- [Testing User Stories](#testing-user-stories)
+  - [Guest / Logged In User](#guest--logged-in-user-customer-looking-to-book)
+  - [Host](#host-dog-friendly-property-owner)
+  - [Website Owner](#webiste-owner-admin-of-the-platform)
+- [Manual Testing Table](#manual-testing-table-for-woofaway)
+- [Peer Review](#peer-review)
+- [Bugs](#bugs)
+- [Unresolved](#unresolved)
+
 # Code Validation
 
 ## W3C HTML Validator
@@ -40,7 +62,9 @@ WoofAway website has been tested using the following methods:
 
 - WoofAway website passed all tests using JSHint Validator tool.
 
-## WAVE Webaim Accessibility Checker
+## Accessibility
+
+### WAVE Webaim Accessibility Checker
 
 - The was tested on the home page for accessibility using [WAVE Webaim](https://wave.webaim.org/) an no serious issues found. Contrast error was over the transparent image and the errors were emoty links which had icons in them.
 
@@ -48,7 +72,7 @@ WoofAway website has been tested using the following methods:
 
 ![Wave Listings](docs/TESTING/WAVE-listings.png)
 
-## Lighthouse
+## Google Lighthouse
 
 I used the Lighthouse reports in Google Developer Tools to examine the pages of the website for the following
 

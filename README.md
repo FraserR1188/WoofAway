@@ -2,6 +2,8 @@
 
 ## Milestone Project 4 - Full Stack Frameworks with Django
 
+![Main Image](docs/milestone-image.png)
+
 - WoofAway is a full-stack Django web application designed to connect dog owners with verified, dog-friendly accommodation providers. The platform allows users to search, book, and review stays that cater specifically to their pets’ needs. At the same time, hosts can register and list their own dog-welcoming properties, manage bookings, and engage with guest feedback.
 
 - The website offers a secure authentication system, a relational database with CRUD functionality for listings and bookings, and e-commerce integration via Stripe to process payments. With a clear user-focused interface, WoofAway aims to deliver a seamless, pet-conscious travel experience while demonstrating strong full-stack development practices in line with professional web application standards.
@@ -24,7 +26,43 @@ The primary goal of WoofAway is to create a user-friendly, full-stack Django web
 
 ## Contents
 
-- [User Stories]
+- [User Stories](#user-stories)
+  - [Guest/Logged In User](#guest--logged-in-user-customer-looking-to-book)
+  - [Host](#host-dog-friendly-property-owner)
+  - [Website Owner](#website-owner-admin-of-the-platform)
+- [Design](#design)
+  - [Overview](#overview)
+  - [Colour Scheme](#colour)
+  - [Typography](#typography)
+  - [Imagery](#imagery)
+  - [Icons](#icons)
+  - [Wireframes](#wireframes)
+- [Features](#features)
+  - [Navigation Bar](#navigation-bar)
+  - [Hero Image](#hero-image)
+  - [Main Section](#main-sections)
+  - [Footer](#footer)
+  - [Sign Up Flow](#sign-up-page)
+  - [Login Page](#login-page)
+  - [Forgotten Password Flow](#user-password-resetforgotten-password)
+  - [Profile](#profile)
+  - [Listings](#listings)
+  - [About](#about)
+  - [Host Dashboard](#host-dashboard)
+  - [Booking/Payment Flow](#bookingpayment-flow)
+  - [Reviews](#review)
+  - [Messaging Service](#messaging-service)
+- [Future Features](#future-features)
+- [Data Model](#data-model)
+- [Technologies Used](#technologies-used)
+  - [Languages Used](#languages-used)
+  - [Frameworks Libraries and Programs](#frameworks-libraries-and-programs)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [Code](#code)
+- [Content](#content)
+- [Media](#media)
+- [Acknowledgements](#acknowledgements)
 
 ## User Stories
 
@@ -49,7 +87,7 @@ The primary goal of WoofAway is to create a user-friendly, full-stack Django web
 - As a host, I want to prevent overlapping bookings so my property isn’t double-booked
 - As a host, I want to respond to guest reviews so I can engage with guest feedback
 
-### Webiste Owner (Admin of the platform)
+### Website Owner (Admin of the platform)
 
 - As a website owner, I want to access the Django admin panel so I can manage users, listings, and reviews
 - As a website owner, I want to remove inappropriate listings or reviews so I can maintain platform safety and quality
@@ -119,6 +157,8 @@ Desktop Wireframe
 
 - This is the host view on the mobile view.
 
+### Hero Image
+
 ![Hero image home page](docs/README/hero-image-main-page.png)
 
 - This is the hero image on the home page.
@@ -127,9 +167,13 @@ Desktop Wireframe
 
 - These are home page buttons which take the user to the listings page or if they have an account/host then they can create a listing. The BROWSE LISTING button has been highlighted to show the animation effect.
 
+### Main Sections
+
 ![Main sections on home page](docs/README/section-with-main-headings.png)
 
 - These are the main section headings on the home page which give good reason to choose this service. All links take the user to the section of the website intended.
+
+### Footer
 
 ![Footer](docs/README/footer.png)
 
@@ -284,6 +328,8 @@ Desktop Wireframe
 
 - From this same section, the user can leave a review. This review section is available only when the guest has paid. For testing purposes I had to see if it works but future development I would make it so it becomes active after the stay.
 
+### Review
+
 ![Review Form](docs/README/review-form.png)
 
 - This is where the guest can leave a 1-5 star rating and a comment.
@@ -303,6 +349,8 @@ Desktop Wireframe
 - Once a booking is made, as mentioned before, the guest can interact with the host via a messaging service. This is incase the guest has any questions to ask the host on stuff which hasn'e been mentioned in the listing description. Again, I thought this was a nice, user-friendly feature.
 
 - The messaging service can be used through the My Booking, and then selecting the booking which will be taking place. The message can then be picked up from the nav-bar and then through the inbox.
+
+### Messaging Service
 
 ![Messaging Service](docs/README/messaging-service.png)
 
@@ -429,8 +477,6 @@ Desktop Wireframe
 
 # Code
 
-## Code
-
 - Code Institute: I referred to lessons and source code from Code Institute's Web Application Development course. I sourced the CRUD functionality on how to set up the database using the walkthrough. As well as understanding the Stripe payment system.
 
 - Bootstrap: I used this library throughout the project. Particularly for the nav bar, cards, forms and buttons.
@@ -439,15 +485,15 @@ Desktop Wireframe
 
 - YouTube: Visiual tutorials on how cloud computing works to understand AWS better for the uploading of images to S3 Buckets. the documentation from Amazon also helped.
 
-## Content
+# Content
 
 - [AirBnb](https://www.airbnb.co.uk/) I used this site as inspiration but I tried to make my website feel more personal.
 
-## Media
+# Media
 
 - I sourced all the pictures from [Unsplash](https://unsplash.com/).
 
-### Acknowledgements
+# Acknowledgements
 
 - Many thanks to my mentor Mikto for guiding me the way with heplful feedback and recommended tools.
 - Thank you to the tutors and staff at Code Institute for their support.
