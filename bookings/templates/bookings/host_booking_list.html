@@ -1,4 +1,3 @@
-{# bookings/templates/bookings/host_booking_list.html #}
 {% extends "base.html" %}
 
 {% block content %}
@@ -29,7 +28,7 @@
               </a>
             </td>
             <td>
-              <a href="{% url 'accounts:view_profile' %}?user={{ booking.guest.pk }}">
+              <a href="{% url 'accounts:profile_detail' booking.guest.profile.pk %}">
                 {{ booking.guest.username }}
               </a>
             </td>
@@ -44,77 +43,90 @@
                 <span class="badge bg-danger">Cancelled</span>
               {% endif %}
             </td>
-            <td>${{ booking.total_price }}</td>
+            <td>£{{ booking.total_price }}</td>
             <td>
-              <a 
-                href="{% url 'bookings:booking_detail' booking.pk %}" 
-                class="btn btn-sm btn-primary"
-              >
-                View
-              </a>
-              {% if booking.status == "pending" %}
-                {# Confirm form (if you created ConfirmBookingView) #}
-                <form 
-                  action="{% url 'bookings:booking_confirm' booking.pk %}" 
-                  method="post" 
-                  class="d-inline"
-                  onsubmit="return confirm('Mark this booking as confirmed?');"
-                >
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-sm btn-success">Confirm</button>
-                </form>
+              <a href="{% url 'bookings:booking_detail' booking.pk %}" class="btn btn-sm btn-primary">View</a>
 
-                {# Cancel booking form #}
-                <form 
-                  action="{% url 'bookings:booking_cancel' booking.pk %}" 
-                  method="post" 
-                  class="d-inline"
-                  onsubmit="return confirm('Cancel this booking?');"
-                >
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-sm btn-danger">Cancel</button>
-                </form>
+              {% if booking.status == "pending" %}
+                <!-- Confirm and Cancel Buttons trigger modals -->
+                <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#confirmModal{{ booking.pk }}">
+                  Confirm
+                </button>
+                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal{{ booking.pk }}">
+                  Cancel
+                </button>
+
+                <!-- Confirm Modal -->
+                <div class="modal fade" id="confirmModal{{ booking.pk }}" tabindex="-1" aria-labelledby="confirmLabel{{ booking.pk }}" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="confirmLabel{{ booking.pk }}">Confirm Booking #{{ booking.pk }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Are you sure you want to mark this booking as confirmed?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <form action="{% url 'bookings:booking_confirm' booking.pk %}" method="post" class="d-inline">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-success">Yes, Confirm</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Cancel Modal -->
+                <div class="modal fade" id="cancelModal{{ booking.pk }}" tabindex="-1" aria-labelledby="cancelLabel{{ booking.pk }}" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="cancelLabel{{ booking.pk }}">Cancel Booking #{{ booking.pk }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Are you sure you want to cancel this booking? This action cannot be undone.
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Keep Booking</button>
+                        <form action="{% url 'bookings:booking_cancel' booking.pk %}" method="post" class="d-inline">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-danger">Yes, Cancel</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               {% endif %}
             </td>
           </tr>
-        {% endfor %}       {# ← Make sure this endfor is present #}
+        {% endfor %}
       </tbody>
     </table>
 
-    {# Pagination controls, if you set paginate_by in the view #}
     {% if is_paginated %}
       <nav aria-label="Page navigation">
         <ul class="pagination">
           {% if page_obj.has_previous %}
-            <li class="page-item">
-              <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-            </li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
           {% else %}
-            <li class="page-item disabled">
-              <span class="page-link">Previous</span>
-            </li>
+            <li class="page-item disabled"><span class="page-link">Previous</span></li>
           {% endif %}
 
           {% for num in paginator.page_range %}
             {% if num == page_obj.number %}
-              <li class="page-item active">
-                <span class="page-link">{{ num }}</span>
-              </li>
+              <li class="page-item active"><span class="page-link">{{ num }}</span></li>
             {% else %}
-              <li class="page-item">
-                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
-              </li>
+              <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
             {% endif %}
           {% endfor %}
 
           {% if page_obj.has_next %}
-            <li class="page-item">
-              <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
-            </li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
           {% else %}
-            <li class="page-item disabled">
-              <span class="page-link">Next</span>
-            </li>
+            <li class="page-item disabled"><span class="page-link">Next</span></li>
           {% endif %}
         </ul>
       </nav>
