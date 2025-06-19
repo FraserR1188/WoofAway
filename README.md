@@ -285,4 +285,164 @@ Desktop Wireframe
 
 - From this same section, the user can leave a review. This review section is available only when the guest has paid. For testing purposes I had to see if it works but future development I would make it so it becomes active after the stay.
 
-![]()
+![Review Form](docs/README/review-form.png)
+
+- This is where the guest can leave a 1-5 star rating and a comment.
+
+![Review Final](docs/README/review-final.png)
+
+- From a user perspective.
+
+![Review Edit Delete](docs/README/review-edit-delete.png)
+
+- This gives the guest a chance to delete or edit their review.
+
+![Review Home](docs/README/review-home.png)
+
+- Via the home, there's a way to go through all the reviews which are present on the site.
+
+- Once a booking is made, as mentioned before, the guest can interact with the host via a messaging service. This is incase the guest has any questions to ask the host on stuff which hasn'e been mentioned in the listing description. Again, I thought this was a nice, user-friendly feature.
+
+- The messaging service can be used through the My Booking, and then selecting the booking which will be taking place. The message can then be picked up from the nav-bar and then through the inbox.
+
+![Messaging Service](docs/README/messaging-service.png)
+
+- This is the conversation flow.
+
+![Conversation](docs/README/conversations.png)
+
+- This is what is looks like with a conversation present.
+
+![No Conversation](docs/README/no-conversations.png)
+
+- No conversations.
+
+# Future Features
+
+### Cateogories / Search
+
+- The categories dropdown is available but due to time contraints I couldn't finish it. I would also implement a search functionality with key words.
+
+### Host Availability Calendar & Sync
+
+- An interactive calendar which let hosts block out dates (vacations, personal time) so guests always see real availability. Also intergrate with Google Calender and iCal so host/guest don't have to double-enter.
+
+### Profile & Listing Verification
+
+- Superhost” badge which will automatically grant after a host hits a threshold of bookings, positive reviews, and response rate. ID verification that offers optional or mandatory host/guest ID checks for extra trust (e.g. via a third-party service).
+
+### Richer Messaging Experience
+
+- Attachments and photos which let users share images (e.g. of the dog’s favorite toy) or PDF waivers for signature. Read receipt that shows when a message has been seen.
+
+# Data Model
+
+[View my database schema here](docs/README/ERD%20WoofAway.png)
+
+# Technologies Used
+
+## Languages Used
+
+- [HTML5](https://en.wikipedia.org/wiki/HTML5)
+
+- [CSS3](https://en.wikipedia.org/wiki/CSS)
+
+- [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
+
+- [Python](<https://en.wikipedia.org/wiki/Python_(programming_language)>)
+
+## Frameworks Libraries and Programs
+
+- [Heroku](https://id.heroku.com/login)
+
+  - Heroku is the deployment source I used for this project. I'm also using it for the Postgres relational database
+
+- [Django](https://www.djangoproject.com/)
+
+  - I used this full-stack framework to create my website.
+
+- [Jinja](https://jinja.palletsprojects.com/en/3.0.x/)
+
+  - Templating language I've used with Python to add logic to my html templates.
+
+- [Google Fonts](https://fonts.google.com/)
+
+  - Two fonts are imported from google fonts.
+
+- [Font awesome](https://fontawesome.com/)
+
+  - I used icons from font awesome on social media icons on the footer.
+
+- [Git](https://git-scm.com/)
+
+  - Git was used as a version control in the terminal.
+
+- [Github](https://github.com/)
+
+  - Github was used to create and store the project repository.
+
+- [Google Chrome Dev Tools](https://developer.chrome.com/docs/devtools/)
+
+  - Google Chrome's Dev Tools were used while building the project to test responsiveness and for debugging.
+
+- [DrawSQL](https://drawsql.app/)
+
+  - I used DrawSQL for creating my database schema.
+
+- [VS Code](https://code.visualstudio.com/)
+
+  - VS Code was my IDE throughout this project.
+
+- [flatpickr](https://flatpickr.js.org/)
+
+  - Used for the calender when the guest reserves their booking.
+
+- [Bootstrap 5](https://getbootstrap.com/)
+
+  - I used this for my front-end design with HTML, CSS, JS. I used features including Nav bar, Cards, Buttons and Forms.
+
+- [Unsplash](https://unsplash.com/)
+
+  - I used this site for all the images.
+
+- [Stripe](https://stripe.com/gb)
+
+  - I used Stripe as the payment system in this website.
+
+# Testing
+
+- Please refer [here](TESTING.md) for more information on testing of the WoofAway website
+
+# Deployment
+
+- Please refer [here](DEPLOYMENT.md) for more information on testing of the WoofAway website
+
+# Code
+
+## Code
+
+- Code Institute: I referred to lessons and source code from Code Institute's Web Application Development course. I sourced the CRUD functionality on how to set up the database using the walkthrough. As well as understanding the Stripe payment system.
+
+- Bootstrap: I used this library throughout the project. Particularly for the nav bar, cards, forms and buttons.
+
+- Documentation: I referred to the documentation provided by [Django](https://docs.djangoproject.com/en/5.2/) and also [Python](https://www.python.org/doc/).
+
+- YouTube: Visiual tutorials on how cloud computing works to understand AWS better for the uploading of images to S3 Buckets. the documentation from Amazon also helped.
+
+## Content
+
+- [AirBnb](https://www.airbnb.co.uk/) I used this site as inspiration but I tried to make my website feel more personal.
+
+## Media
+
+- I sourced all the pictures from [Unsplash](https://unsplash.com/).
+
+### Acknowledgements
+
+- Many thanks to my mentor Mikto for guiding me the way with heplful feedback and recommended tools.
+- Thank you to the tutors and staff at Code Institute for their support.
+- I really appreciate the people who I work with as it provided a wide testing base.
+
+Please note this is a personal project. This website is purely for the sake of the developer's portfolio and not for public consumption.
+
+Robbie Fraser, 2025
