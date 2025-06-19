@@ -336,6 +336,17 @@ Desktop Wireframe
 
 # Data Model
 
+## Considerations
+
+- WoofAway keeps authentication and profile data separate: we use Django’s built-in User for login credentials and permissions, and a one-to-one UserProfile for bio, picture, host flag, address, and accessibility fields. Listings reference their host, include key pet-friendly details (price, max dogs, dog policy, accessibility), and link to a simple Category lookup table for consistent filtering.
+
+- Each Booking ties a guest and a listing to a date range, enforces valid check-in/check-out rules in the form, calculates total_price automatically, and includes a status field to track pending, confirmed, or cancelled stays. Payments are stored in their own model related 1:1 to a Booking so we can record Stripe intent IDs, handle retries or webhooks, and keep financial data separate from reservation logic.
+
+- Reviews live in a small table linking users to listings with a 1–5 star rating and comment; we enforce one review per completed stay at the application level. Messaging is built around a Conversation model (two participants + listing) with an associated Message table for individual chat entries—this separation makes it easy to later add attachments or group threads.
+
+- All foreign-key relationships use cascading deletes to keep orphaned records out of the database, and critical lookups (e.g. bookings by host or guest, reviews by listing) are indexed by default in Django. This design strikes a balance between normalization (no duplicated fields), clarity of cardinality, and room for future growth—whether adding amenities, implementing calendar exclusion constraints for bookings, or archiving old data.
+  Easy Extensibility: Add more profile fields (social links, preferences) without touching auth tables.
+
 [View my database schema here](docs/README/ERD%20WoofAway.png)
 
 # Technologies Used
