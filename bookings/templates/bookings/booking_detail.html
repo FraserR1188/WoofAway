@@ -68,26 +68,18 @@
           <dd class="col-sm-9">{{ booking.payment.timestamp|date:"M d, Y H:i" }}</dd>
         </dl>
 
-        {# Only show a CTA if the payment itself is still pending #}
         {% if booking.payment.status == "pending" %}
           <div class="text-center mb-4">
-            <a
-              href="{% url 'payments:detail' booking.pk %}"
-              class="btn btn-lg btn-primary px-5"
-            >
+            <a href="{% url 'payments:detail' booking.pk %}" class="btn btn-lg btn-primary px-5">
               Complete Payment
             </a>
           </div>
         {% endif %}
 
       {% else %}
-        {# No payment yet & booking is still pending => allow checkout #}
         {% if booking.status == "pending" %}
           <div class="text-center mb-4">
-            <a
-              href="{% url 'payments:detail' booking.pk %}"
-              class="btn btn-lg btn-primary px-5"
-            >
+            <a href="{% url 'payments:detail' booking.pk %}" class="btn btn-lg btn-primary px-5">
               Checkout &amp; Pay
             </a>
           </div>
@@ -97,10 +89,7 @@
       {# ===== Messaging CTA ===== #}
       {% if request.user == booking.guest and booking.listing.host != request.user %}
         <div class="text-center mb-4">
-          <a
-            href="{% url 'messaging:conversation_create' booking.listing.pk %}"
-            class="btn btn-outline-primary"
-          >
+          <a href="{% url 'messaging:conversation_create' booking.listing.pk %}" class="btn btn-outline-primary">
             Message Host
           </a>
         </div>
@@ -108,33 +97,41 @@
 
       {# ===== Footer Actions ===== #}
       <div class="d-flex justify-content-between">
-        <a href="{% url 'bookings:booking_list' %}" class="btn btn-outline-secondary">
-          Back to My Bookings
-        </a>
+        <a href="{% url 'bookings:booking_list' %}" class="btn btn-outline-secondary">Back to My Bookings</a>
 
         {% if booking.status == "pending" and request.user == booking.guest %}
           <div>
-            <a
-              href="{% url 'bookings:booking_edit' booking.pk %}"
-              class="btn btn-outline-primary me-2"
-            >
-              Edit
-            </a>
-            <form
-              action="{% url 'bookings:booking_cancel' booking.pk %}"
-              method="post"
-              class="d-inline"
-              onsubmit="return confirm('Cancel this booking?');"
-            >
-              {% csrf_token %}
-              <button type="submit" class="btn btn-danger">
-                Cancel Booking
-              </button>
-            </form>
+            <a href="{% url 'bookings:booking_edit' booking.pk %}" class="btn btn-outline-primary me-2">Edit</a>
+            <!-- Trigger Cancel Modal -->
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal{{ booking.pk }}">
+              Cancel Booking
+            </button>
           </div>
         {% endif %}
       </div>
 
+    </div>
+  </div>
+</div>
+
+<!-- Cancel Confirmation Modal -->
+<div class="modal fade" id="cancelModal{{ booking.pk }}" tabindex="-1" aria-labelledby="cancelModalLabel{{ booking.pk }}" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cancelModalLabel{{ booking.pk }}">Cancel Booking #{{ booking.pk }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to cancel this booking? This action cannot be undone.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Keep Booking</button>
+        <form action="{% url 'bookings:booking_cancel' booking.pk %}" method="post" class="d-inline">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Yes, Cancel</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>
