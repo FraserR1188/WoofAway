@@ -31,7 +31,6 @@ The primary goal of WoofAway is to create a user-friendly, full-stack Django web
 ### Guest / Logged-in user (Customer looking to book)
 
 - As a guest / logged-in user, I want to be able to register and log in so I can book listings and leave reviews.
-- As a guest / logged-in user, I want to be able to search and filter listings so I can find suitable places for me and my dog.
 - As a guest / logged-in user, I want to be able to view detailed listing pages so I can see pet-friendly features, photos and price.
 - As a guest / logged-in user, I want to be able to make a secure booking so I can reserve a place for my trip.
 - As a guest / logged-in user, I want to be able to pay for my trip easily.
