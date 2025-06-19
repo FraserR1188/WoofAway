@@ -16,12 +16,12 @@
       {{ form.non_field_errors }}
 
       <div class="col-md-4">
-        <label for="{{ form.rating.id_for_label }}" class="form-label">Rating</label>
+        <label for="{{ form.rating.id_for_label }}" class="form-label"></label>
         {{ form.rating|as_crispy_field }}
         {{ form.rating.errors }}
       </div>
       <div class="col-12">
-        <label for="{{ form.comment.id_for_label }}" class="form-label">Comment</label>
+        <label for="{{ form.comment.id_for_label }}" class="form-label"></label>
         {{ form.comment|as_crispy_field }}
         {{ form.comment.errors }}
       </div>

@@ -282,3 +282,7 @@ Desktop Wireframe
 ![Booking Pending](docs/README/booking-pending.png)
 
 - Sometimes the guest can't always pay there and then so once the booking has been reserved it will stay on there bookings waiting to be paid. It also gives them the option to edit or cancel the booking.
+
+- From this same section, the user can leave a review. This review section is available only when the guest has paid. For testing purposes I had to see if it works but future development I would make it so it becomes active after the stay.
+
+![]()
