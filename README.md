@@ -201,7 +201,7 @@ Desktop Wireframe
 
 ![Listing List](docs/README/listing-specific.png)
 
-- This is the page with the listing detail.
+- This is the page with the listing detail. I made sure that there was a link to the host's profile so that the guest will feel more comfortable with their staying. Feeling like they've already met the host.
 
 ![Listing Detail](docs/README/listing.png)
 
@@ -255,4 +255,30 @@ Desktop Wireframe
 
 ![Booking Reserve](docs/README/booking-reserve.png)
 
-- The
+- The reserve screen allows the user to select dates in a fun, easy way. It also asks the user how many dogs they will bring. The number is set by the host who sets a limit when the listing is created. The number of dogs is then sent in a email when the payment has been authorised.
+
+![Booking Calender](docs/README/booking-calender.png)
+
+![Booking Num Dogs](docs/README/booking-num-dogs.png)
+
+![Booking Created](docs/README/booking-created.png)
+
+- Once the booking has been created the user is then taken to a summary where they have a number of options.
+
+![Payment Invalid](docs/README/payment-invalid.png)
+
+- This is to show that there is some sort of defense against an incorrect credit card number
+
+![Payment Success](docs/README/payment-success.png)
+
+- Once the correct details have been inputted the user is then notified and a basic email is sent to both the guest and the host.
+
+![Payment Email](docs/README/payment-email.png)
+
+![Payment Confirmed](docs/README/payment-confirmed-info.png)
+
+- This confirmed information is always accessible to the guest and the host via the host dashboard. The information will also be present via email. I like the fact the host and guest have a close, transparent realtionship throughout the process.
+
+![Booking Pending](docs/README/booking-pending.png)
+
+- Sometimes the guest can't always pay there and then so once the booking has been reserved it will stay on there bookings waiting to be paid. It also gives them the option to edit or cancel the booking.
