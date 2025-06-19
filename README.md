@@ -136,7 +136,7 @@ Desktop Wireframe
 
 - This is the footer which is present throughout the website. It contains a button which take the user to sign-up page if not already signed up. there also Font Awesome icons taking the user to the correct social media outlets.
 
-## Sign Up Page
+### Sign Up Page
 
 - I've test data in the screenshot to show how it looks.
 
@@ -157,11 +157,11 @@ Desktop Wireframe
 
 - Once confirmed, the user is then taken the login page to them start exploring the site with a user account.
 
-## Login Page
+### Login Page
 
 ![Login Page](docs/README/login.png)
 
-## User Password Reset/Forgotten Password
+### User Password Reset/Forgotten Password
 
 - If the user has forgotten their password as warning will pop up.
 
@@ -177,7 +177,7 @@ Desktop Wireframe
 
 - THIS NEEDS MOREEOEOEOEOEO
 
-## Profile
+### Profile
 
 ![Profile Before](docs/README/profile-before.png)
 
@@ -189,13 +189,13 @@ Desktop Wireframe
 
 ![Profile Edit Filled](docs/README/profile-edit-filled.png)
 
-- This is an exmaple of the profile edit vore being filled.
+- This is an exmaple of the profile edit before being filled. It gives the user an option to upload an image of themselves.
 
 ![Profile Result](docs/README/profile-result.png)
 
 - This shows an image of the user also the Host? showing green. If they were not a host then it would be grey and saying no.
 
-## Listings
+### Listings
 
 - This is the listings landing page. Since this user is a host the green button "CREATE NEW LISTING" is showing.
 
@@ -204,3 +204,35 @@ Desktop Wireframe
 - This is the page with the listing detail.
 
 ![Listing Detail](docs/README/listing.png)
+
+- This is what a normal user will see. The view will change for a host which created the listing.
+
+![Listing Edit User](docs/README/listing-edit-user.png)
+
+![LIsting Edit](docs/README/listing-edit.png)
+
+- These are the editable fields on the listing. The creation and editing screens are the same page. All fields from the custom model are present and the host can select up to 20 dogs to stay.
+
+![Listing Delete](docs/README/listing-delete-confirmation.png)
+
+- If the user decides to delete their listing this modal pops up to confirm.
+
+### About
+
+- I thought it might be nice to have an About page to give a better understanding to the website. The picture which is shown was prepared by myself.
+
+![About Hero](docs/README/about-hero.png)
+
+- This explains the goals of the website.
+
+![About Main](docs/README/about-main.png)
+
+- This introduces the people behind the website and a snazzy Accordion with more information.
+
+### Host Dashboard
+
+- This section is only available to Hosts as it shows the current status of any booking they may have.
+
+![Host Dashboard](docs/README/host-dasboard.png)
+
+- It give the host complete control over their bookings. The host can carry out the following actions if they desire. The confirm button will confirm the booking but not pay for it as only the guest can do this. The may needed on a special requirement basis e.g. family staying...
