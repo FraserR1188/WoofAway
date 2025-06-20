@@ -220,7 +220,3 @@ max_dogs not showing on the “Create/Edit Listing” form. I added max_dogs to 
 No field for “number of dogs” in Booking. The booking model only included dates and price. Guests couldn’t tell hosts how many dogs they’d bring. Added a num_dogs field to Booking, surfaced it on the listing form, and validated it against the host’s max_dogs.
 
 Profile detail showed request.user instead of target user. On /profile/<pk>/, you were still rendering {{ request.user.email }} and {{ request.user.username }} even if you’d loaded someone else’s profile. Switched to {{ profile.user.email }}/{{ profile.user.username }} and only show the “Edit Profile” button when request.user == profile.user.
-
-## Unresolved
-
-My css on mobile view for the buttons isn't ideal and sometimes the calender and be hard to use. Due to time, I wasn't able to change.

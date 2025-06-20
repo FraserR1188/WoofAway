@@ -12,3 +12,7 @@ def index(request):
 
 class AboutPageView(TemplateView):
     template_name = "home/about.html"
+
+
+def page_not_found(request, exception):
+    return render(request, "404.html", status=404)

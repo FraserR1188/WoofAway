@@ -42,4 +42,7 @@ urlpatterns = [
 
     #Payments app
     path("payments/", include("payments.urls", namespace="payments")),
+
 ]
+
+handler404 = "home.views.page_not_found"
