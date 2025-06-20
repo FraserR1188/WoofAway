@@ -1,10 +1,8 @@
 from django.http import Http404
-from django.urls import reverse_lazy
 from django.shortcuts import redirect
-from django.views.generic import (
-    ListView, DetailView, CreateView, UpdateView, DeleteView
-)
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib import messages
 
 from .models import Listing
 from .forms import ListingForm
@@ -27,13 +25,18 @@ class ListingCreateView(LoginRequiredMixin, CreateView):
     model = Listing
     form_class = ListingForm
     template_name = "listings/listing_form.html"
-    success_url = reverse_lazy("listings:listing_list")
     action = "create"
 
     def form_valid(self, form):
         # automatically set the host to the current user
         form.instance.host = self.request.user
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        messages.success(self.request, "Your listing was created successfully!")
+        return response
+
+    def get_success_url(self):
+        # redirect to the newly created listing’s detail page
+        return self.object.get_absolute_url()
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
@@ -45,7 +48,6 @@ class ListingUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Listing
     form_class = ListingForm
     template_name = "listings/listing_form.html"
-    success_url = reverse_lazy("listings:listing_list")
     action = "edit"
 
     def test_func(self):
@@ -53,8 +55,16 @@ class ListingUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return self.get_object().host == self.request.user
 
     def handle_no_permission(self):
-        # optional: return 404 rather than redirect to login
         raise Http404("You do not have permission to edit this listing.")
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Listing updated successfully.")
+        return response
+
+    def get_success_url(self):
+        # redirect to the updated listing’s detail page
+        return self.object.get_absolute_url()
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
@@ -66,7 +76,7 @@ class ListingUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 class ListingDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Listing
     template_name = "listings/listing_confirm_delete.html"
-    success_url = reverse_lazy("listings:listing_list")
+    success_url = "/listings/"
 
     def dispatch(self, request, *args, **kwargs):
         try:
@@ -80,6 +90,10 @@ class ListingDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return self.request.user == listing.host or self.request.user.is_superuser
 
     def handle_no_permission(self):
-        from django.contrib import messages
         messages.error(self.request, "You do not have permission to delete that listing.")
         return redirect(self.success_url)
+
+    def delete(self, request, *args, **kwargs):
+        response = super().delete(request, *args, **kwargs)
+        messages.success(self.request, "Listing deleted successfully.")
+        return response
