@@ -15,18 +15,14 @@
 
 {% block content %}
 <div class="container py-5 text-center">
-  <img
-    src="{% static 'images/404-dog.png' %}"
-    alt="Sad dog"
-    class="img-fluid mb-4"
-    style="max-width: 300px;"
-  >
+  {# <img src="{% static 'images/404-dog.png' %}" alt="Sad dog" class="img-fluid mb-4" style="max-width: 300px;"> #}
+  
   <p class="mb-4">
     The URL you requested doesn’t exist.
     <br>
     Try returning home or checking the link.
   </p>
-  <a href="{% url 'home:index' %}" class="btn btn-primary btn-lg">
+  <a href="/" class="btn btn-primary btn-lg">
     Back to Home
   </a>
 </div>
