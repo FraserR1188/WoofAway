@@ -364,6 +364,12 @@ Desktop Wireframe
 
 - No conversations.
 
+### 404
+
+![404](docs/README/404.png)
+
+If the user goes tries to put an invalid url on the website this 404 page pops up and redirects the user to the home page.
+
 # Future Features
 
 ### Cateogories / Search
